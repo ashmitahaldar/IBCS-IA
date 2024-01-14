@@ -1,0 +1,44 @@
+/* #FFA670 #FFD170 #FFBE70 #FF8D70 #FFE370*/
+
+.login-bg{
+    -fx-background-color: linear-gradient(to bottom right, #FF8D70, #FFD170);
+}
+
+.app-bg{
+    -fx-background-color: #FFBE70;
+}
+
+.textfield-design{
+    -fx-background-radius: 10px;
+    -fx-border-width: 2px;
+    -fx-border-color: gray;
+    -fx-border-radius: 10px;
+    -fx-text-inner-color: #000;
+}
+
+.button-design{
+    -fx-background-color: linear-gradient(to bottom right, #FF8D70, #FFD170);
+    -fx-background-radius: 20px;
+    -fx-cursor: hand;
+}
+
+.button-design:hover{
+    -fx-background-color: linear-gradient(to bottom right, #FFA670, #FFE370)
+}
+
+.navbar-bg{
+    -fx-background-color: linear-gradient(to bottom right, #FF8D70, #FFD170);
+}
+
+.navbar-button{
+    -fx-background-color: linear-gradient(to bottom right, #FFA670, #FFE370);
+    -fx-text-fill: #000;
+    -fx-cursor: hand;
+    -fx-alignment: center-left;
+    -fx-font-size: 17px;
+}
+
+.navbar-button:hover{
+    -fx-background-color: linear-gradient(to bottom right, #FF8D70, #FFD170);
+    -fx-cursor: hand;
+}
