@@ -4,39 +4,23 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="2651dba4-d7fa-4278-b443-2b3640fa4299" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/dataSources.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/discord.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/sqldialects.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/uiDesigner.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.mvn/wrapper/maven-wrapper.jar" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.mvn/wrapper/maven-wrapper.properties" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mvnw" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mvnw.cmd" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/compsciia/compsciia.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/compsciia/controllers/LoginController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/compsciia/models/User.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/compsciia/util/SceneSwitcher.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/compsciia/util/database.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/compsciia/util/userService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/compsciia/views/AddNewPane.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/compsciia/views/ClientAnalysisPane.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/compsciia/views/Dashboard.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/compsciia/views/DashboardPane.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/compsciia/views/InvestmentAnalysisPane.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/compsciia/views/ProfilePane.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/compsciia/views/loginPage.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/compsciia/views/signUpPage.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/module-info.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/com/example/compsciia/home.fxml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/com/example/compsciia/login.fxml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/com/example/compsciia/stylesheet.css" afterDir="false" />
+    <list default="true" id="2651dba4-d7fa-4278-b443-2b3640fa4299" name="Changes" comment="built login/signup system and constructed navbar">
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/compsciia/views/ClientRecordsPane.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/compsciia/models/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/compsciia/models/User.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/compsciia/util/SceneSwitcher.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/compsciia/util/PaneSwitcher.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/compsciia/util/userService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/compsciia/util/UserService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/compsciia/views/AddNewPane.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/compsciia/views/AddNewPane.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/compsciia/views/ClientAnalysisPane.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/compsciia/views/Dashboard.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/compsciia/views/Dashboard.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/compsciia/views/DashboardPane.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/compsciia/views/DashboardPane.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/compsciia/views/InvestmentAnalysisPane.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/compsciia/views/InvestmentAnalysisPane.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/compsciia/views/ProfilePane.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/compsciia/views/ProfilePane.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/compsciia/views/loginPage.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/compsciia/views/loginPage.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/compsciia/views/signUpPage.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/compsciia/views/signUpPage.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/module-info.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/module-info.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/com/example/compsciia/home.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/com/example/compsciia/home.fxml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -75,6 +59,7 @@
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
     &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
     &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;extract.method.default.visibility&quot;: &quot;private&quot;,
     &quot;git-widget-placeholder&quot;: &quot;main&quot;,
     &quot;list.type.of.created.stylesheet&quot;: &quot;CSS&quot;,
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
@@ -101,6 +86,31 @@
       <recent name="$PROJECT_DIR$/src" />
     </key>
   </component>
+  <component name="RunManager" selected="Application.compsciia">
+    <configuration name="compsciia" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="com.example.compsciia.compsciia" />
+      <module name="compsciia" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.example.compsciia.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="app_users.sql" type="DatabaseScript" editBeforeRun="true" nameIsGenerated="true">
+      <script-file value="997291d8-fab0-40bf-89f3-a46d4a0dc1c4/database/compsciia/schema/public/table/app_users.sql" />
+      <script-mode>FILE</script-mode>
+      <method v="2" />
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Application.compsciia" />
+      </list>
+    </recent_temporary>
+  </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
@@ -119,12 +129,67 @@
       <workItem from="1705039486805" duration="11730000" />
       <workItem from="1705056822915" duration="6042000" />
       <workItem from="1705212514798" duration="121000" />
-      <workItem from="1705212647370" duration="11157000" />
+      <workItem from="1705212647370" duration="12339000" />
+      <workItem from="1705292359077" duration="15909000" />
+      <workItem from="1705328731159" duration="31000" />
+      <workItem from="1705328803788" duration="5533000" />
     </task>
+    <task id="LOCAL-00001" summary="built login/signup system and constructed navbar">
+      <option name="closed" value="true" />
+      <created>1705231665723</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1705231665723</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State>
+              <option name="FILTERS">
+                <map>
+                  <entry key="branch">
+                    <value>
+                      <list>
+                        <option value="HEAD" />
+                      </list>
+                    </value>
+                  </entry>
+                </map>
+              </option>
+            </State>
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="built login/signup system and constructed navbar" />
+    <option name="LAST_COMMIT_MESSAGE" value="built login/signup system and constructed navbar" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/com/example/compsciia/views/loginPage.java</url>
+          <line>119</line>
+          <option name="timeStamp" value="8" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/com/example/compsciia/util/UserService.java</url>
+          <line>101</line>
+          <option name="timeStamp" value="9" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/compsciia$HelloApplication.ic" NAME="HelloApplication Coverage Results" MODIFIED="1702059629017" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">

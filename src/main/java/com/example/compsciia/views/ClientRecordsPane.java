@@ -6,7 +6,7 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 
-public class DashboardPane {
+public class ClientRecordsPane {
     public static AnchorPane createPane(Integer userId){
         AnchorPane root = new AnchorPane();
         root.setLayoutX(10.0);
@@ -28,7 +28,7 @@ public class DashboardPane {
         topAnchorPane.getStylesheets().add(compsciia.class.getResource("stylesheet.css").toExternalForm());
 
         // Label in Top AnchorPane
-        Label titleLabel = new Label("Dashboard");
+        Label titleLabel = new Label("Client Records");
         titleLabel.setLayoutX(20.0);
         titleLabel.setLayoutY(25.0);
         titleLabel.setPrefHeight(40.0);

@@ -6,14 +6,14 @@ import javafx.scene.layout.AnchorPane;
 
 import java.io.IOException;
 import java.util.Objects;
-public class SceneSwitcher {
-    public SceneSwitcher(AnchorPane currentAnchorPane, String fxml) throws IOException {
+public class PaneSwitcher {
+    public PaneSwitcher(AnchorPane currentAnchorPane, String fxml) throws IOException {
         AnchorPane nextAnchorPane = FXMLLoader.load(Objects.requireNonNull(compsciia.class.getResource(fxml)));
         currentAnchorPane.getChildren().removeAll();
         currentAnchorPane.getChildren().setAll(nextAnchorPane);
     }
 
-    public SceneSwitcher(AnchorPane currentAnchorPane, AnchorPane nextAnchorPane) throws IOException {
+    public PaneSwitcher(AnchorPane currentAnchorPane, AnchorPane nextAnchorPane) throws IOException {
         currentAnchorPane.getChildren().removeAll();
         currentAnchorPane.getChildren().setAll(nextAnchorPane);
     }

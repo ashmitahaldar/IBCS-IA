@@ -1,6 +1,7 @@
 package com.example.compsciia.views;
 import com.example.compsciia.compsciia;
-import com.example.compsciia.util.userService;
+import com.example.compsciia.models.User;
+import com.example.compsciia.util.UserService;
 
 import javafx.collections.FXCollections;
 import javafx.scene.Scene;
@@ -76,39 +77,42 @@ public class loginPage {
         loginLabel.setPrefWidth(84.0);
         loginLabel.setFont(new Font("Arial", 33.0));
 
+        // y diff between text label and text field - 30px
+        // y diff between text field and text label - 50px
+        // y diff between text field and button - 50px
+
+        Label emailTextLabel = new Label("Email Address");
+        emailTextLabel.setLayoutX(220.0);
+        emailTextLabel.setLayoutY(150.0);
+        emailTextLabel.setFont(new Font(18.0));
+
         TextField emailTextField = new TextField();
         emailTextField.setLayoutX(220.0);
-        emailTextField.setLayoutY(230.0);
+        emailTextField.setLayoutY(180.0);
         emailTextField.setPrefHeight(25.0);
         emailTextField.setPrefWidth(240.0);
         emailTextField.setPromptText("Email Address");
         emailTextField.setFont(new Font(15.0));
         emailTextField.getStyleClass().add("textfield-design");
 
+        Label passwordLabel = new Label("Password");
+        passwordLabel.setLayoutX(220.0);
+        passwordLabel.setLayoutY(230.0);
+        passwordLabel.setFont(new Font(18.0));
+
         PasswordField passwordField = new PasswordField();
         passwordField.setLayoutX(220.0);
-        passwordField.setLayoutY(280.0);
+        passwordField.setLayoutY(260.0);
         passwordField.setPrefHeight(25.0);
         passwordField.setPrefWidth(240.0);
         passwordField.setPromptText("Password");
         passwordField.setFont(new Font(15.0));
         passwordField.getStyleClass().add("textfield-design");
 
-        ChoiceBox<String> accountTypeChoiceBox = new ChoiceBox<>();
-        accountTypeChoiceBox.setLayoutX(220.0);
-        accountTypeChoiceBox.setLayoutY(180.0);
-        accountTypeChoiceBox.setPrefWidth(240.0);
-        accountTypeChoiceBox.setItems(FXCollections.observableArrayList("Client", "Administrator"));
-
-        Label accountTypeLabel = new Label("Account Type");
-        accountTypeLabel.setLayoutX(220.0);
-        accountTypeLabel.setLayoutY(150.0);
-        accountTypeLabel.setFont(new Font(18.0));
-
         Button loginButton = new Button("Login");
         loginButton.setId("loginPage-login");
         loginButton.setLayoutX(220.0);
-        loginButton.setLayoutY(330.0);
+        loginButton.setLayoutY(310.0);
         loginButton.setPrefHeight(30.0);
         loginButton.setPrefWidth(80.0);
         loginButton.getStyleClass().add("button-design");
@@ -121,14 +125,14 @@ public class loginPage {
         Button signUpButton = new Button("Create Account");
         signUpButton.setId("loginPage-signup");
         signUpButton.setLayoutX(340.0);
-        signUpButton.setLayoutY(330.0);
+        signUpButton.setLayoutY(310.0);
         signUpButton.setPrefHeight(30.0);
         signUpButton.setPrefWidth(120.0);
         signUpButton.getStyleClass().add("button-design");
         signUpButton.setOnAction(e -> stage.setScene(signUpPage.createScene(stage, new loginPage())));
 
         centerAnchorPane.getChildren().addAll(loginLabel, emailTextField, passwordField,
-                accountTypeChoiceBox, accountTypeLabel, loginButton, signUpButton);
+                 emailTextLabel, passwordLabel, loginButton, signUpButton);
 
         // Set components in the BorderPane
         root.setLeft(leftAnchorPane);
@@ -140,24 +144,26 @@ public class loginPage {
     }
 
     private void validate(String email, String password, Stage stage) {
-        if (isValidEmail(email) && isValidPassword(password)){
-            if (!isValidUser(email, password)) {
-                showInvalidUserPopup();
-            } else if (isValidUser(email, password)){
-                System.out.println("User is valid");
-                stage.setScene(Dashboard.createScene(stage, new loginPage(), userService.getUserFromDatabase(email, password)));
-            }
+        if (isValidUser(email, password)){
+            System.out.println("User is valid");
+            User user = UserService.getUserFromDatabase(email, password);
+            showLoginPopup(user);
+            stage.setScene(Dashboard.createScene(stage, new loginPage(), user.getId()));
         } else {
-            if (!isValidEmail(email)){
-                showInvalidEmailPopup();
-            }
-            if (!isValidPassword(password)){
-                showInvalidPasswordPopup();
+            if (!isValidEmail(email) || !isValidPassword(password)){
+                if (!isValidEmail(email)){
+                    showInvalidEmailPopup();
+                }
+                if (!isValidPassword(password)){
+                    showInvalidPasswordPopup();
+                }
+            } else {
+                showInvalidUserPopup();
             }
         }
     }
     private boolean isValidUser(String email, String password) {
-        return userService.getUserFromDatabase(email, password) != null;
+        return UserService.getUserFromDatabase(email, password) != null;
     }
     private void showInvalidUserPopup() {
         Alert alert = new Alert(Alert.AlertType.ERROR);
@@ -210,6 +216,14 @@ public class loginPage {
         alert.setTitle("Invalid Password");
         alert.setHeaderText(null);
         alert.setContentText("Please enter a password with at least 8 characters, one uppercase letter, one lowercase letter, one digit, and one special character.");
+
+        alert.showAndWait();
+    }
+    private void showLoginPopup(User user){
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("Login Success");
+        alert.setHeaderText(null);
+        alert.setContentText("Welcome " + user.getUsername() + "! You will now be logged in.");
 
         alert.showAndWait();
     }

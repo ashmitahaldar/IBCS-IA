@@ -2,7 +2,8 @@ package com.example.compsciia.views;
 
 import com.example.compsciia.compsciia;
 import com.example.compsciia.models.User;
-import com.example.compsciia.util.SceneSwitcher;
+import com.example.compsciia.util.PaneSwitcher;
+import com.example.compsciia.util.UserService;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
@@ -17,9 +18,12 @@ import javafx.scene.layout.BorderPane;
 import org.kordamp.ikonli.javafx.FontIcon;
 
 import java.util.Optional;
+import java.util.concurrent.atomic.AtomicReference;
 
 public class Dashboard {
-    public static Scene createScene(Stage stage, loginPage loginPage, User user){
+    public static Scene createScene(Stage stage, loginPage loginPage, Integer userId){
+        AtomicReference<User> user = new AtomicReference<>(UserService.getUserFromDatabase(userId));
+
         BorderPane root = new BorderPane();
         root.setPrefSize(1000, 600);
 
@@ -44,25 +48,29 @@ public class Dashboard {
         // Second AnchorPane in left VBox
         AnchorPane secondAnchorPane = new AnchorPane();
         secondAnchorPane.setPrefSize(250, 200);
-        Circle circle = new Circle(63, Color.DODGERBLUE);
-        circle.setCenterX(10);
-        circle.setCenterY(0);
-        circle.setLayoutX(115);
-        circle.setLayoutY(63);
+        Circle profilePicture = new Circle(63, Color.DODGERBLUE);
+        profilePicture.setCenterX(10);
+        profilePicture.setCenterY(0);
+        profilePicture.setLayoutX(115);
+        profilePicture.setLayoutY(63);
         Image im = new Image("https://media.istockphoto.com/id/1180184210/photo/sky-cloud-pink-love-sweet-love-color-tone-for-wedding-card-background.jpg?s=612x612&w=0&k=20&c=nm7d0aCwz2CuT-ETUFsI5S08eCnLZQsLhR4pAYJdbP0=",false);
-        circle.setFill(new ImagePattern(im));
+        if (user.get().getProfileImage() != null) {
+            profilePicture.setFill(new ImagePattern(user.get().getProfileImage()));
+        } else {
+            profilePicture.setFill(new ImagePattern(im));
+        }
         Label welcomeLabel = new Label("Welcome!");
         welcomeLabel.setFont(new Font(20));
         welcomeLabel.setPrefSize(100, 25);
         welcomeLabel.setLayoutX(80);
         welcomeLabel.setLayoutY(135);
-        Label userLabel = new Label(user.getEmail());
+        Label userLabel = new Label(user.get().getUsername());
         userLabel.setFont(new Font(20));
         userLabel.setPrefSize(200, 25);
         userLabel.setLayoutX(25);
         userLabel.setLayoutY(160);
         userLabel.setAlignment(javafx.geometry.Pos.CENTER);
-        secondAnchorPane.getChildren().addAll(circle, welcomeLabel, userLabel);
+        secondAnchorPane.getChildren().addAll(profilePicture, welcomeLabel, userLabel);
 
         // Third AnchorPane in left VBox
         AnchorPane thirdAnchorPane = new AnchorPane();
@@ -73,7 +81,8 @@ public class Dashboard {
         dashboardButton.setLayoutY(0);
         dashboardButton.setOnAction(e -> {
             try {
-                new SceneSwitcher(centerPane, "dashboard.fxml");
+                dashboardUpdate(userId, user, profilePicture, userLabel);
+                new PaneSwitcher(centerPane, DashboardPane.createPane(userId));
             } catch (Exception exception) {
                 exception.printStackTrace();
             }
@@ -84,7 +93,8 @@ public class Dashboard {
         addNewButton.setLayoutY(55);
         addNewButton.setOnAction(e -> {
             try {
-                new SceneSwitcher(centerPane, "addNew.fxml");
+                dashboardUpdate(userId, user, profilePicture, userLabel);
+                new PaneSwitcher(centerPane, AddNewPane.createPane(userId));
             } catch (Exception exception) {
                 exception.printStackTrace();
             }
@@ -95,7 +105,8 @@ public class Dashboard {
         clientRecordsButton.setLayoutY(110);
         clientRecordsButton.setOnAction(e -> {
             try {
-                new SceneSwitcher(centerPane, "clientRecords.fxml");
+                dashboardUpdate(userId, user, profilePicture, userLabel);
+                new PaneSwitcher(centerPane, ClientRecordsPane.createPane(userId));
             } catch (Exception exception) {
                 exception.printStackTrace();
             }
@@ -106,7 +117,8 @@ public class Dashboard {
         investmentAnalysisButton.setLayoutY(165);
         investmentAnalysisButton.setOnAction(e -> {
             try {
-                new SceneSwitcher(centerPane, "investmentAnalysis.fxml");
+                dashboardUpdate(userId, user, profilePicture, userLabel);
+                new PaneSwitcher(centerPane, InvestmentAnalysisPane.createPane(userId));
             } catch (Exception exception) {
                 exception.printStackTrace();
             }
@@ -122,7 +134,8 @@ public class Dashboard {
         profileButton.setLayoutY(10);
         profileButton.setOnAction(e -> {
             try {
-                new SceneSwitcher(centerPane, "profile.fxml");
+                dashboardUpdate(userId, user, profilePicture, userLabel);
+                new PaneSwitcher(centerPane, ProfilePane.createPane(userId));
             } catch (Exception exception) {
                 exception.printStackTrace();
             }
@@ -168,6 +181,16 @@ public class Dashboard {
         Optional<ButtonType> buttonType = alert.showAndWait();
         if(buttonType.isPresent() && buttonType.get().equals(ButtonType.OK)) {
             stage.setScene(loginPage.createScene(stage, new signUpPage()));
+        }
+    }
+    private static void dashboardUpdate(Integer userId, AtomicReference<User> user, Circle profilePicture, Label userLabel) {
+        user.set(UserService.getUserFromDatabase(userId));
+        userLabel.setText(user.get().getUsername());
+        Image im = new Image("https://media.istockphoto.com/id/1180184210/photo/sky-cloud-pink-love-sweet-love-color-tone-for-wedding-card-background.jpg?s=612x612&w=0&k=20&c=nm7d0aCwz2CuT-ETUFsI5S08eCnLZQsLhR4pAYJdbP0=",false);
+        if (user.get().getProfileImage() != null) {
+            profilePicture.setFill(new ImagePattern(user.get().getProfileImage()));
+        } else {
+            profilePicture.setFill(new ImagePattern(im));
         }
     }
 }

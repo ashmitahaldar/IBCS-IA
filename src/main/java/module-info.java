@@ -8,6 +8,8 @@ module com.example.compsciia {
     requires org.kordamp.ikonli.javafx;
     requires org.kordamp.bootstrapfx.core;
     requires java.sql;
+    requires java.desktop;
+    requires javafx.swing;
 
     opens com.example.compsciia to javafx.fxml;
     exports com.example.compsciia;

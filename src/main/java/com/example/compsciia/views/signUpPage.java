@@ -1,6 +1,6 @@
 package com.example.compsciia.views;
 import com.example.compsciia.compsciia;
-import com.example.compsciia.util.userService;
+import com.example.compsciia.util.UserService;
 import javafx.collections.FXCollections;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
@@ -11,7 +11,6 @@ import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
 import java.util.Objects;
-import java.util.Optional;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -70,39 +69,61 @@ public class signUpPage {
         loginLabel.setPrefWidth(150.0);
         loginLabel.setFont(new Font("Arial", 33.0));
 
+        // y diff between text label and text field - 30px
+        // y diff between text field and text label - 50px
+        // y diff between text field and button - 50px
+
+        Label usernameLabel = new Label("Username");
+        usernameLabel.setLayoutX(220.0);
+        usernameLabel.setLayoutY(150.0);
+        usernameLabel.setFont(new Font(18.0));
+
+        TextField usernameField = new TextField();
+        usernameField.setLayoutX(220.0);
+        usernameField.setLayoutY(180.0);
+        usernameField.setPrefWidth(240.0);
+        usernameField.setPromptText("Username");
+        usernameField.setFont(new Font(15.0));
+        usernameField.getStyleClass().add("textfield-design");
+
+        Label emailTextLabel = new Label("Email Address");
+        emailTextLabel.setLayoutX(220.0);
+        emailTextLabel.setLayoutY(230.0);
+        emailTextLabel.setFont(new Font(18.0));
+
         TextField emailTextField = new TextField();
         emailTextField.setLayoutX(220.0);
-        emailTextField.setLayoutY(230.0);
+        emailTextField.setLayoutY(260.0);
         emailTextField.setPrefHeight(25.0);
         emailTextField.setPrefWidth(240.0);
         emailTextField.setPromptText("Email Address");
         emailTextField.setFont(new Font(15.0));
         emailTextField.getStyleClass().add("textfield-design");
 
+        Label passwordLabel = new Label("Password");
+        passwordLabel.setLayoutX(220.0);
+        passwordLabel.setLayoutY(310.0);
+        passwordLabel.setFont(new Font(18.0));
+
         PasswordField passwordField = new PasswordField();
         passwordField.setLayoutX(220.0);
-        passwordField.setLayoutY(280.0);
+        passwordField.setLayoutY(340.0);
         passwordField.setPrefHeight(25.0);
         passwordField.setPrefWidth(240.0);
         passwordField.setPromptText("Password");
         passwordField.setFont(new Font(15.0));
         passwordField.getStyleClass().add("textfield-design");
 
-        ChoiceBox<String> accountTypeChoiceBox = new ChoiceBox<>();
-        accountTypeChoiceBox.setLayoutX(220.0);
-        accountTypeChoiceBox.setLayoutY(180.0);
-        accountTypeChoiceBox.setPrefWidth(240.0);
-        accountTypeChoiceBox.setItems(FXCollections.observableArrayList("Client", "Administrator"));
-
-        Label accountTypeLabel = new Label("Account Type");
-        accountTypeLabel.setLayoutX(220.0);
-        accountTypeLabel.setLayoutY(150.0);
-        accountTypeLabel.setFont(new Font(18.0));
+//        ChoiceBox<String> accountTypeChoiceBox = new ChoiceBox<>();
+//        accountTypeChoiceBox.setLayoutX(220.0);
+//        accountTypeChoiceBox.setLayoutY(180.0);
+//        accountTypeChoiceBox.setPrefWidth(240.0);
+//        accountTypeChoiceBox.setItems(FXCollections.observableArrayList("Client", "Administrator"));
 
         Button loginButton = new Button("Back to Login");
         loginButton.setId("loginPage-login");
         loginButton.setLayoutX(220.0);
-        loginButton.setLayoutY(330.0);
+        loginButton.setLayoutY(390.0);
         loginButton.setPrefHeight(30.0);
         loginButton.setPrefWidth(100.0);
         loginButton.getStyleClass().add("button-design");
@@ -111,18 +132,19 @@ public class signUpPage {
         Button signUpButton = new Button("Sign Up");
         signUpButton.setId("loginPage-signup");
         signUpButton.setLayoutX(370.0);
-        signUpButton.setLayoutY(330.0);
+        signUpButton.setLayoutY(390.0);
         signUpButton.setPrefHeight(30.0);
         signUpButton.setPrefWidth(90.0);
         signUpButton.getStyleClass().add("button-design");
         signUpButton.setOnAction(event -> {
-            validate(emailTextField.getText(),passwordField.getText());
+            validate(usernameField.getText(), emailTextField.getText(),passwordField.getText());
+            usernameField.clear();
             emailTextField.clear();
             passwordField.clear();
         });
 
-        centerAnchorPane.getChildren().addAll(loginLabel, emailTextField, passwordField,
-                accountTypeChoiceBox, accountTypeLabel, loginButton, signUpButton);
+        centerAnchorPane.getChildren().addAll(loginLabel, emailTextLabel, emailTextField, passwordLabel, passwordField,
+                usernameField, usernameLabel, loginButton, signUpButton);
 
         // Set components in the BorderPane
         root.setRight(rightAnchorPane);
@@ -133,7 +155,7 @@ public class signUpPage {
         return scene;
     }
 
-    private void validate(String email, String password) {
+    private void validate(String username, String email, String password) {
         if (!isValidEmail(email)) {
             showInvalidEmailPopup();
         }
@@ -141,7 +163,7 @@ public class signUpPage {
             showInvalidPasswordPopup();
         }
         if (isValidEmail(email) && isValidPassword(password)){
-            userService.writeUserToDatabase(email, password);
+            UserService.writeUserToDatabase(username, email, password);
             Alert success = new Alert(Alert.AlertType.INFORMATION);
             success.setTitle("Success");
             success.setHeaderText(null);
