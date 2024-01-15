@@ -3,6 +3,7 @@ import com.example.compsciia.compsciia;
 
 import com.example.compsciia.models.User;
 import com.example.compsciia.util.UserService;
+import com.example.compsciia.util.Validators;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
@@ -234,132 +235,32 @@ public class ProfilePane {
     }
 
     private static void isValid(Integer userId, String email, String password, String username, String firstName, String lastName, String phoneNumber, LocalDate dateOfBirth) {
-        if (isFirstNameValid(firstName) && isLastNameValid(lastName) && isEmailValid(email) && isPasswordValid(password) && isUsernameValid(username) && isDateOfBirthValid(dateOfBirth)){
+        if (Validators.isValidFirstName(firstName) && Validators.isValidLastName(lastName) && Validators.isValidEmail(email) && Validators.isValidPassword(password) && Validators.isValidUsername(username) && Validators.isValidDateOfBirth(dateOfBirth)){
             // update user
             UserService.updateUserInDatabase(userId, email, password, username, firstName, lastName, phoneNumber, dateOfBirth);
 
         } else {
-            if (!isFirstNameValid(firstName)) {
-                showInvalidFirstNamePopup();
+            if (!Validators.isValidFirstName(firstName)) {
+                Validators.showInvalidFirstNamePopup();
             }
-            if (!isLastNameValid(lastName)) {
-                showInvalidLastNamePopup();
+            if (!Validators.isValidLastName(lastName)) {
+                Validators.showInvalidLastNamePopup();
             }
-            if (!isEmailValid(email)) {
-                showInvalidEmailPopup();
+            if (!Validators.isValidEmail(email)) {
+                Validators.showInvalidEmailPopup();
             }
-            if (!isPasswordValid(password)) {
-                showInvalidPasswordPopup();
+            if (!Validators.isValidPassword(password)) {
+                Validators.showInvalidPasswordPopup();
             }
-            if (!isUsernameValid(username)) {
-                showInvalidUsernamePopup();
+            if (!Validators.isValidUsername(username)) {
+                Validators.showInvalidUsernamePopup();
             }
-            if (!isPhoneNumberValid(phoneNumber)) {
-                showInvalidPhoneNumberPopup();
+            if (!Validators.isValidPhoneNumber(phoneNumber)) {
+                Validators.showInvalidPhoneNumberPopup();
             }
-            if (!isDateOfBirthValid(dateOfBirth)) {
-                showInvalidDateOfBirthPopup();
+            if (!Validators.isValidDateOfBirth(dateOfBirth)) {
+                Validators.showInvalidDateOfBirthPopup();
             }
         }
-    }
-    private static boolean isFirstNameValid(String firstName) {
-        return firstName.matches("[a-zA-Z]+");
-    }
-
-    private static boolean isLastNameValid(String lastName) {
-        return lastName.matches("[a-zA-Z]+");
-    }
-
-    private static boolean isEmailValid(String email) {
-        return email.matches("[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,4}");
-    }
-
-    private static boolean isPasswordValid(String password) {
-        if (password.length() < 8) {
-            return false;
-        }
-        if (!password.matches(".*[A-Z].*")) {
-            return false;
-        }
-        if (!password.matches(".*[a-z].*")) {
-            return false;
-        }
-        if (!password.matches(".*\\d.*")) {
-            return false;
-        }
-        if (!password.matches(".*[!@#$%^&*()-_+=<>?/{}\\[\\]~].*")) {
-            return false;
-        }
-        return true;
-    }
-
-    private static boolean isUsernameValid(String username) {
-        if (username.matches("[a-zA-Z0-9]+")){ // ADD CHECKING TO SEE IF USERNAME EXISTS IN DB
-            return true;
-        } else return false;
-    }
-
-    private static boolean isPhoneNumberValid(String phoneNumber) {
-        return phoneNumber.matches("[0-9]{10}");
-    }
-
-    private static boolean isDateOfBirthValid(LocalDate dateOfBirth) {
-        return dateOfBirth.isBefore(LocalDate.now());
-    }
-
-    private static void showInvalidFirstNamePopup() {
-        Alert alert = new Alert(Alert.AlertType.ERROR);
-        alert.setTitle("Invalid First Name");
-        alert.setHeaderText(null);
-        alert.setContentText("Please enter a valid first name.");
-        alert.showAndWait();
-    }
-
-    private static void showInvalidLastNamePopup() {
-        Alert alert = new Alert(Alert.AlertType.ERROR);
-        alert.setTitle("Invalid Last Name");
-        alert.setHeaderText(null);
-        alert.setContentText("Please enter a valid last name.");
-        alert.showAndWait();
-    }
-
-    private static void showInvalidEmailPopup() {
-        Alert alert = new Alert(Alert.AlertType.ERROR);
-        alert.setTitle("Invalid Email");
-        alert.setHeaderText(null);
-        alert.setContentText("Please enter a valid email address.");
-        alert.showAndWait();
-    }
-
-    private static void showInvalidPasswordPopup() {
-        Alert alert = new Alert(Alert.AlertType.ERROR);
-        alert.setTitle("Invalid Password");
-        alert.setHeaderText(null);
-        alert.setContentText("Please enter a password with at least 8 characters, one uppercase letter, one lowercase letter, one digit, and one special character.");
-        alert.showAndWait();
-    }
-
-    private static void showInvalidUsernamePopup() {
-        Alert alert = new Alert(Alert.AlertType.ERROR);
-        alert.setTitle("Invalid Username");
-        alert.setHeaderText(null);
-        alert.setContentText("Username already exists in database. Please enter a different username.");
-        alert.showAndWait();
-    }
-
-    private static void showInvalidPhoneNumberPopup() {
-        Alert alert = new Alert(Alert.AlertType.ERROR);
-        alert.setTitle("Invalid Phone Number");
-        alert.setHeaderText(null);
-        alert.setContentText("Please enter a valid phone number.");
-        alert.showAndWait();
-    }
-
-    private static void showInvalidDateOfBirthPopup() {
-        Alert alert = new Alert(Alert.AlertType.ERROR);
-        alert.setTitle("Invalid Date of Birth");
-        alert.setHeaderText(null);
-        alert.setContentText("Please enter a valid date of birth.");
-        alert.showAndWait();
     }
 }

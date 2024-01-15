@@ -152,4 +152,21 @@ public class UserService {
             System.out.println(e.getMessage());
         }
     }
+
+    public static boolean isUsernameTaken(String username){
+        String query = "SELECT * FROM app_users WHERE username = ?";
+
+        try (Connection conn = database.connect(); PreparedStatement stmt = Objects.requireNonNull(conn).prepareStatement(query)) {
+            stmt.setString(1, username);
+            ResultSet resultset = stmt.executeQuery();
+            while (resultset.next()) {
+                System.out.println("Username: " + username);
+                System.out.println("Username is taken");
+                return true;
+            }
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+        return false;
+    }
 }

@@ -2,6 +2,7 @@ package com.example.compsciia.views;
 import com.example.compsciia.compsciia;
 import com.example.compsciia.models.User;
 import com.example.compsciia.util.UserService;
+import com.example.compsciia.util.Validators;
 
 import javafx.collections.FXCollections;
 import javafx.scene.Scene;
@@ -144,80 +145,23 @@ public class loginPage {
     }
 
     private void validate(String email, String password, Stage stage) {
-        if (isValidUser(email, password)){
+        if (Validators.isValidUser(email, password)){
             System.out.println("User is valid");
             User user = UserService.getUserFromDatabase(email, password);
             showLoginPopup(user);
             stage.setScene(Dashboard.createScene(stage, new loginPage(), user.getId()));
         } else {
-            if (!isValidEmail(email) || !isValidPassword(password)){
-                if (!isValidEmail(email)){
-                    showInvalidEmailPopup();
+            if (!Validators.isValidEmail(email) || !Validators.isValidPassword(password)){
+                if (!Validators.isValidEmail(email)){
+                    Validators.showInvalidEmailPopup();
                 }
-                if (!isValidPassword(password)){
-                    showInvalidPasswordPopup();
+                if (!Validators.isValidPassword(password)){
+                    Validators.showInvalidPasswordPopup();
                 }
             } else {
-                showInvalidUserPopup();
+                Validators.showInvalidUserPopup();
             }
         }
-    }
-    private boolean isValidUser(String email, String password) {
-        return UserService.getUserFromDatabase(email, password) != null;
-    }
-    private void showInvalidUserPopup() {
-        Alert alert = new Alert(Alert.AlertType.ERROR);
-        alert.setTitle("Invalid User");
-        alert.setHeaderText(null);
-        alert.setContentText("A user with the entered credentials does not exist.");
-
-        alert.showAndWait();
-    }
-
-    private boolean isValidEmail(String email) {
-        // Regular expression for a simple email validation
-        String emailRegex = "^[a-zA-Z0-9_+&*-]+(?:\\.[a-zA-Z0-9_+&*-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,7}$";
-        Pattern pattern = Pattern.compile(emailRegex);
-        Matcher matcher = pattern.matcher(email);
-        return matcher.matches();
-    }
-    private boolean isValidPassword(String password) {
-        // Check for at least 8 characters
-        if (password.length() < 8) {
-            return false;
-        }
-        if (!password.matches(".*[A-Z].*")) {
-            return false;
-        }
-        if (!password.matches(".*[a-z].*")) {
-            return false;
-        }
-        if (!password.matches(".*\\d.*")) {
-            return false;
-        }
-        if (!password.matches(".*[!@#$%^&*()-_+=<>?/{}\\[\\]~].*")) {
-            return false;
-        }
-        return true;
-    }
-    private void showInvalidEmailPopup() {
-        Alert alert = new Alert(Alert.AlertType.ERROR);
-        alert.setTitle("Invalid Email");
-        alert.setHeaderText(null);
-        alert.setContentText("Please enter a valid email address.");
-        alert.showAndWait();
-//        Optional<ButtonType> result = alert.showAndWait();
-//        if (result.isPresent() && result.get() == ButtonType.OK) {
-//            // User clicked OK, you can perform additional actions if needed
-//        }
-    }
-    private void showInvalidPasswordPopup() {
-        Alert alert = new Alert(Alert.AlertType.ERROR);
-        alert.setTitle("Invalid Password");
-        alert.setHeaderText(null);
-        alert.setContentText("Please enter a password with at least 8 characters, one uppercase letter, one lowercase letter, one digit, and one special character.");
-
-        alert.showAndWait();
     }
     private void showLoginPopup(User user){
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
