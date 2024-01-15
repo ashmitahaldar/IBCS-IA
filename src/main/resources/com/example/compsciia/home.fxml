@@ -3,6 +3,8 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ProgressBar?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
@@ -98,7 +100,7 @@
                   </BorderPane>
                </children>
             </AnchorPane>
-            <AnchorPane layoutX="10.0" layoutY="10.0" prefHeight="600.0" prefWidth="750.0" stylesheets="@stylesheet.css" visible="false">
+            <AnchorPane layoutX="10.0" layoutY="10.0" prefHeight="600.0" prefWidth="750.0" stylesheets="@stylesheet.css">
                <children>
                   <BorderPane prefHeight="600.0" prefWidth="750.0">
                      <top>
@@ -112,6 +114,67 @@
                            </children>
                         </AnchorPane>
                      </top>
+                     <center>
+                        <TabPane prefHeight="200.0" prefWidth="200.0" tabClosingPolicy="UNAVAILABLE" BorderPane.alignment="CENTER">
+                          <tabs>
+                            <Tab text="Client Entry">
+                              <content>
+                                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                                       <children>
+                                          <Label layoutX="27.0" layoutY="283.0" prefHeight="40.0" prefWidth="150.0" text="ID Number">
+                                             <font>
+                                                <Font size="20.0" />
+                                             </font>
+                                          </Label>
+                                          <Label layoutX="27.0" layoutY="31.0" prefHeight="40.0" prefWidth="150.0" text="First Name">
+                                             <font>
+                                                <Font size="20.0" />
+                                             </font>
+                                          </Label>
+                                          <Label layoutX="27.0" layoutY="71.0" prefHeight="40.0" prefWidth="150.0" text="Last Name">
+                                             <font>
+                                                <Font size="20.0" />
+                                             </font>
+                                          </Label>
+                                          <Label layoutX="27.0" layoutY="111.0" prefHeight="40.0" prefWidth="150.0" text="Email Address">
+                                             <font>
+                                                <Font size="20.0" />
+                                             </font>
+                                          </Label>
+                                          <Label layoutX="27.0" layoutY="243.0" prefHeight="40.0" prefWidth="150.0" text="Address">
+                                             <font>
+                                                <Font size="20.0" />
+                                             </font>
+                                          </Label>
+                                          <Label layoutX="27.0" layoutY="151.0" prefHeight="40.0" prefWidth="150.0" text="Phone Number">
+                                             <font>
+                                                <Font size="20.0" />
+                                             </font>
+                                          </Label>
+                                          <Label layoutX="27.0" layoutY="194.0" prefHeight="40.0" prefWidth="150.0" text="Date of Birth">
+                                             <font>
+                                                <Font size="20.0" />
+                                             </font>
+                                          </Label>
+                                          <TextField layoutX="162.0" layoutY="194.0" prefHeight="40.0" prefWidth="250.0" styleClass="textfield-design" stylesheets="@stylesheet.css" />
+                                          <TextField layoutX="162.0" layoutY="283.0" prefHeight="40.0" prefWidth="250.0" styleClass="textfield-design" stylesheets="@stylesheet.css" />
+                                          <TextField layoutX="162.0" layoutY="151.0" prefHeight="40.0" prefWidth="250.0" styleClass="textfield-design" stylesheets="@stylesheet.css" />
+                                          <TextField layoutX="162.0" layoutY="71.0" prefHeight="40.0" prefWidth="250.0" styleClass="textfield-design" stylesheets="@stylesheet.css" />
+                                          <TextField layoutX="162.0" layoutY="31.0" prefHeight="40.0" prefWidth="250.0" styleClass="textfield-design" stylesheets="@stylesheet.css" />
+                                          <TextField layoutX="162.0" layoutY="243.0" prefHeight="40.0" prefWidth="250.0" styleClass="textfield-design" stylesheets="@stylesheet.css" />
+                                          <TextField layoutX="162.0" layoutY="111.0" prefHeight="40.0" prefWidth="250.0" styleClass="textfield-design" stylesheets="@stylesheet.css" />
+                                       </children>
+                                    </AnchorPane>
+                              </content>
+                            </Tab>
+                            <Tab text="Investment Entry">
+                              <content>
+                                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+                              </content>
+                            </Tab>
+                          </tabs>
+                        </TabPane>
+                     </center>
                   </BorderPane>
                </children>
             </AnchorPane>
@@ -149,7 +212,7 @@
                   </BorderPane>
                </children>
             </AnchorPane>
-            <AnchorPane layoutX="10.0" layoutY="10.0" prefHeight="600.0" prefWidth="750.0" stylesheets="@stylesheet.css">
+            <AnchorPane layoutX="10.0" layoutY="10.0" prefHeight="600.0" prefWidth="750.0" stylesheets="@stylesheet.css" visible="false">
                <children>
                   <BorderPane prefHeight="600.0" prefWidth="750.0">
                      <top>
