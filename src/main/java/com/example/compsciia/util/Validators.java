@@ -127,4 +127,38 @@ public class Validators {
         alert.setContentText("Please enter a valid date of birth.");
         alert.showAndWait();
     }
+    public static boolean isValidInvestmentName(String investmentName) {
+        if (investmentName.matches("[a-zA-Z0-9]+")) {
+            return true;
+        } else return false;
+    }
+    public static void showInvalidInvestmentNamePopup() {
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle("Invalid Investment Name");
+        alert.setHeaderText(null);
+        alert.setContentText("Please enter a valid investment name.");
+        alert.showAndWait();
+    }
+//    public static boolean isValidInvestmentAmount(Double investmentAmount) {
+//        if (investmentAmount > 0) {
+//            return true;
+//        } else return false;
+//    }
+//    public static void showInvalidInvestmentAmountPopup() {
+//        Alert alert = new Alert(Alert.AlertType.ERROR);
+//        alert.setTitle("Invalid Investment Amount");
+//        alert.setHeaderText(null);
+//        alert.setContentText("Please enter a valid investment amount.");
+//        alert.showAndWait();
+//    }
+//    public static boolean isValidInvestmentDate(LocalDate investmentDate) {
+//        return investmentDate.isAfter(LocalDate.now());
+//    }
+//    public static void showInvalidInvestmentDatePopup() {
+//        Alert alert = new Alert(Alert.AlertType.ERROR);
+//        alert.setTitle("Invalid Investment Date");
+//        alert.setHeaderText(null);
+//        alert.setContentText("Date of investment entry cannot be in the future. Please enter a valid investment date.");
+//        alert.showAndWait();
+//    }
 }

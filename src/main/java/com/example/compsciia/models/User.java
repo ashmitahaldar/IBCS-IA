@@ -126,7 +126,6 @@ public class User {
         } else {
             return new User(id, username, email, password, firstName, lastName, phoneNumber, dateOfBirth);
         }
-//        Image profileImage = resultSet.getObject("profile_image", Image.class);
     }
 
     @Override

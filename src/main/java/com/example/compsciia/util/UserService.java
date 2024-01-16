@@ -32,14 +32,19 @@ public class UserService {
         }
     }
 
-    public static void deleteUserFromDatabase(String email){
-        String query = "DELETE FROM app_users WHERE email = ?";
+    public static void deleteUserFromDatabase(String user_id){
+        String query = "DELETE FROM app_users WHERE id = ?";
 
         try (Connection conn = database.connect(); PreparedStatement stmt = Objects.requireNonNull(conn).prepareStatement(query)) {
-            stmt.setString(1, email);
+            stmt.setString(1, user_id);
             stmt.executeUpdate();
-            System.out.println("Email: " + email);
+            System.out.println("ID: " + user_id);
             System.out.println("User deleted from database");
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("User Deleted");
+            alert.setHeaderText(null);
+            alert.setContentText("User with ID " + user_id + " has been deleted from the database successfully.");
+            alert.showAndWait();
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
