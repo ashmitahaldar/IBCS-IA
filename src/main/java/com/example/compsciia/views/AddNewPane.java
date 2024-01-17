@@ -144,7 +144,7 @@ public class AddNewPane {
         choiceBoxChooseClient.setLayoutX(180);
         choiceBoxChooseClient.setLayoutY(30);
         choiceBoxChooseClient.setPrefHeight(35);
-        choiceBoxChooseClient.setPrefWidth(250);
+        choiceBoxChooseClient.setPrefWidth(200);
         choiceBoxChooseClient.getStyleClass().add("textfield-design");
         choiceBoxChooseClient.getStylesheets().add(compsciia.class.getResource("stylesheet.css").toExternalForm());
 
@@ -156,6 +156,7 @@ public class AddNewPane {
         }
         javafx.collections.ObservableList<String> clientNamesObservableList = javafx.collections.FXCollections.observableArrayList(clientNames);
         choiceBoxChooseClient.setItems(clientNamesObservableList);
+
 
         // TextFields
         TextField textFieldInvestmentName = createTextField(180.0, 70.0, 35.0);

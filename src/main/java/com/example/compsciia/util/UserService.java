@@ -1,11 +1,17 @@
 package com.example.compsciia.util;
+import com.example.compsciia.compsciia;
 import com.example.compsciia.models.User;
 import javafx.scene.control.Alert;
+//import javafx.scene.image.Image;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
+import javax.imageio.ImageIO;
+import javax.imageio.stream.ImageInputStream;
+import javax.swing.*;
+import java.awt.*;
+import java.awt.image.BufferedImage;
+import java.awt.image.RenderedImage;
+import java.io.*;
+import java.net.URISyntaxException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -16,12 +22,17 @@ import java.util.Objects;
 
 public class UserService {
     public static void writeUserToDatabase(String username, String email, String password){
-        String query = "INSERT INTO app_users (email, password, username) VALUES (?, ?, ?)";
+        String query = "INSERT INTO app_users (email, password, username, profile_image) VALUES (?, ?, ?, ?)";
 
         try (Connection conn = database.connect(); PreparedStatement stmt = Objects.requireNonNull(conn).prepareStatement(query)) {
             stmt.setString(1, email);
             stmt.setString(2, password);
             stmt.setString(3, username);
+            BufferedImage bufferedImage = ImageIO.read(new File(compsciia.class.getResource("defaultImage.jpg").toURI()));
+            ByteArrayOutputStream os = new ByteArrayOutputStream();
+            ImageIO.write(bufferedImage,"png", os);
+            InputStream fis = new ByteArrayInputStream(os.toByteArray());
+            stmt.setBinaryStream(4, (InputStream) fis, os.toByteArray().length);
             stmt.executeUpdate();
             System.out.println("Email: " + email);
             System.out.println("Password: " + password);
@@ -29,6 +40,10 @@ public class UserService {
             System.out.println("User added to database");
         } catch (SQLException e) {
             System.out.println(e.getMessage());
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        } catch (URISyntaxException e) {
+            throw new RuntimeException(e);
         }
     }
 
@@ -173,5 +188,15 @@ public class UserService {
             System.out.println(e.getMessage());
         }
         return false;
+    }
+    public static BufferedImage convertToBufferedImage(Image image)
+    {
+        BufferedImage newImage = new BufferedImage(
+                image.getWidth(null), image.getHeight(null),
+                BufferedImage.TYPE_INT_ARGB);
+        Graphics2D g = newImage.createGraphics();
+        g.drawImage(image, 0, 0, null);
+        g.dispose();
+        return newImage;
     }
 }

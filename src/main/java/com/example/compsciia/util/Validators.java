@@ -75,7 +75,7 @@ public class Validators {
     }
 
     public static boolean isValidUsername(String username) {
-        if (username.matches("[a-zA-Z0-9]+") && UserService.isUsernameTaken(username)){ // ADD CHECKING TO SEE IF USERNAME EXISTS IN DB
+        if (username.matches("[a-zA-Z0-9]+") && !UserService.isUsernameTaken(username)){ // ADD CHECKING TO SEE IF USERNAME EXISTS IN DB
             return true;
         } else return false;
     }

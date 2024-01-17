@@ -83,22 +83,21 @@ public class ClientService {
         return client;
     }
 
-    public static void updateClientInDatabase(int client_id, int user_id, String client_first_name, String client_last_name, String client_email, String client_phone_number, LocalDate client_date_of_birth, String client_address, String client_registered_id){
-        String query = "UPDATE clients SET user_id = ?, client_first_name = ?, client_last_name = ?, client_email = ?, client_phone_number = ?, client_date_of_birth = ?, client_address = ?, client_registered_id = ? WHERE client_id = ?";
+    public static void updateClientInDatabase(int client_id, String client_first_name, String client_last_name, String client_email, String client_phone_number, LocalDate client_date_of_birth, String client_address, String client_registered_id){
+        String query = "UPDATE clients SET client_first_name = ?, client_last_name = ?, client_email = ?, client_phone_number = ?, client_date_of_birth = ?, client_address = ?, client_registered_id = ? WHERE client_id = ?";
 
         try (Connection conn = database.connect(); PreparedStatement stmt = Objects.requireNonNull(conn).prepareStatement(query)) {
-            stmt.setInt(1, user_id);
-            stmt.setString(2, client_first_name);
-            stmt.setString(3, client_last_name);
-            stmt.setString(4, client_email);
-            stmt.setString(5, client_phone_number);
-            stmt.setObject(6, client_date_of_birth);
-            stmt.setString(7, client_address);
-            stmt.setString(8, client_registered_id);
-            stmt.setInt(9, client_id);
+            stmt.setString(1, client_first_name);
+            stmt.setString(2, client_last_name);
+            stmt.setString(3, client_email);
+            stmt.setString(4, client_phone_number);
+            stmt.setObject(5, client_date_of_birth);
+            stmt.setString(6, client_address);
+            stmt.setString(7, client_registered_id);
+            stmt.setInt(8, client_id);
             stmt.executeUpdate();
             System.out.println("Client ID: " + client_id);
-            System.out.println("User ID: " + user_id);
+            System.out.println("User ID: " + getClientFromDatabase(client_id).getUserId());
             System.out.println("Client First Name: " + client_first_name);
             System.out.println("Client Last Name: " + client_last_name);
             System.out.println("Client Email: " + client_email);

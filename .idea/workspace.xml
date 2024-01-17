@@ -4,18 +4,17 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="2651dba4-d7fa-4278-b443-2b3640fa4299" name="Changes" comment="minor edits">
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/compsciia/models/Client.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/compsciia/models/Investment.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/compsciia/util/ClientService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/compsciia/util/InvestmentService.java" afterDir="false" />
+    <list default="true" id="2651dba4-d7fa-4278-b443-2b3640fa4299" name="Changes" comment="Built Add New pane with working client and investment entries">
+      <change afterPath="$PROJECT_DIR$/src/main/resources/com/example/compsciia/defaultImage.jpg" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/compsciia/models/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/compsciia/models/User.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/compsciia/util/ClientService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/compsciia/util/ClientService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/compsciia/util/InvestmentService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/compsciia/util/InvestmentService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/example/compsciia/util/UserService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/compsciia/util/UserService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/example/compsciia/util/Validators.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/compsciia/util/Validators.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/example/compsciia/views/AddNewPane.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/compsciia/views/AddNewPane.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/compsciia/views/ClientRecordsPane.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/compsciia/views/ClientRecordsPane.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/compsciia/views/ProfilePane.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/compsciia/views/ProfilePane.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/com/example/compsciia/home.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/com/example/compsciia/home.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/com/example/compsciia/stylesheet.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/com/example/compsciia/stylesheet.css" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -64,7 +63,7 @@
     &quot;project.structure.last.edited&quot;: &quot;Modules&quot;,
     &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
     &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;com.github.copilot.settings.ApplicationConfigurable&quot;,
     &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   },
   &quot;keyToStringList&quot;: {
@@ -128,7 +127,10 @@
       <workItem from="1705292359077" duration="15909000" />
       <workItem from="1705328731159" duration="31000" />
       <workItem from="1705328803788" duration="7628000" />
-      <workItem from="1705388402182" duration="12732000" />
+      <workItem from="1705388402182" duration="12771000" />
+      <workItem from="1705459724941" duration="14144000" />
+      <workItem from="1705499510109" duration="342000" />
+      <workItem from="1705499873661" duration="4013000" />
     </task>
     <task id="LOCAL-00001" summary="built login/signup system and constructed navbar">
       <option name="closed" value="true" />
@@ -162,7 +164,15 @@
       <option name="project" value="LOCAL" />
       <updated>1705337109896</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="Built Add New pane with working client and investment entries">
+      <option name="closed" value="true" />
+      <created>1705426166310</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1705426166310</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -196,7 +206,8 @@
     <MESSAGE value="built user profile editing page&#10;only clients managing counter, account data clearing, and account deletion left on that page" />
     <MESSAGE value="minor edits, created Validators class" />
     <MESSAGE value="minor edits" />
-    <option name="LAST_COMMIT_MESSAGE" value="minor edits" />
+    <MESSAGE value="Built Add New pane with working client and investment entries" />
+    <option name="LAST_COMMIT_MESSAGE" value="Built Add New pane with working client and investment entries" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -208,6 +219,10 @@
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
+  </component>
+  <component name="XSLT-Support.FileAssociations.UIState">
+    <expand />
+    <select />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/compsciia$HelloApplication.ic" NAME="HelloApplication Coverage Results" MODIFIED="1702059629017" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">

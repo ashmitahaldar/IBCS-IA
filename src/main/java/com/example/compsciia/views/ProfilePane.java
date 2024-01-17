@@ -235,7 +235,7 @@ public class ProfilePane {
     }
 
     private static void isValid(Integer userId, String email, String password, String username, String firstName, String lastName, String phoneNumber, LocalDate dateOfBirth) {
-        if (Validators.isValidFirstName(firstName) && Validators.isValidLastName(lastName) && Validators.isValidEmail(email) && Validators.isValidPassword(password) && Validators.isValidUsername(username) && Validators.isValidDateOfBirth(dateOfBirth)){
+        if (Validators.isValidFirstName(firstName) && Validators.isValidLastName(lastName) && Validators.isValidEmail(email) && Validators.isValidPassword(password) && isValidUsernameProfilePane(userId, username) && Validators.isValidDateOfBirth(dateOfBirth)){
             // update user
             UserService.updateUserInDatabase(userId, email, password, username, firstName, lastName, phoneNumber, dateOfBirth);
 
@@ -252,7 +252,7 @@ public class ProfilePane {
             if (!Validators.isValidPassword(password)) {
                 Validators.showInvalidPasswordPopup();
             }
-            if (!Validators.isValidUsername(username)) {
+            if (!isValidUsernameProfilePane(userId, username)) {
                 Validators.showInvalidUsernamePopup();
             }
             if (!Validators.isValidPhoneNumber(phoneNumber)) {
@@ -262,5 +262,12 @@ public class ProfilePane {
                 Validators.showInvalidDateOfBirthPopup();
             }
         }
+    }
+
+    private static boolean isValidUsernameProfilePane(Integer userId, String newUsername){
+        String oldUsername = UserService.getUserFromDatabase(userId).getUsername();
+        if (newUsername.equals(oldUsername)){
+            return true;
+        } else return (newUsername.matches("[a-zA-Z0-9]+") && !UserService.isUsernameTaken(newUsername));
     }
 }

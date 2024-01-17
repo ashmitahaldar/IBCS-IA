@@ -1,5 +1,6 @@
 package com.example.compsciia.util;
 
+import com.example.compsciia.models.Client;
 import com.example.compsciia.models.Investment;
 import javafx.scene.control.Alert;
 
@@ -111,6 +112,24 @@ public class InvestmentService {
                 Investment investment = Investment.fromResultSet(rs);
                 investments.add(investment);
                 System.out.println("Client with ID " + investment.getInvestmentId() + " retrieved from database");
+            }
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+        return investments;
+    }
+
+    public static ArrayList<Investment> getAllInvestmentsFromDatabaseForClient(int client_id){
+        String query = "SELECT * FROM investments WHERE client_id = ?";
+        ArrayList<Investment> investments = new ArrayList<>();
+
+        try (Connection conn = database.connect(); PreparedStatement stmt = Objects.requireNonNull(conn).prepareStatement(query)) {
+            stmt.setInt(1, client_id);
+            ResultSet rs = stmt.executeQuery();
+            while (rs.next()) {
+                Investment investment = Investment.fromResultSet(rs);
+                investments.add(investment);
+                System.out.println("Investment with ID " + investment.getInvestmentId() + " retrieved from database");
             }
         } catch (SQLException e) {
             System.out.println(e.getMessage());
