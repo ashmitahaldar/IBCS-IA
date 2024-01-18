@@ -176,34 +176,32 @@ public class ClientRecordsPane {
         investmentEntryAnchorPane.setPrefSize(750.0, 500.0);
 
         // Labels
-        Label labelChooseClient = createLabel("Choose Client", 15.0, 30.0);
-        Label labelInvestmentName = createLabel("Investment Name", 15.0, 70.0);
-        Label labelInvestmentAmount = createLabel("Amount", 15.0, 110.0);
-        Label labelInvestmentDate = createLabel("Date", 15.0, 150.0);
-        Label labelInvestmentDescription = createLabel("Description", 15.0, 190.0);
+        Label labelChooseClient = createLabel("Choose Client", 5.0, 30.0);
+        Label labelInvestmentID = createLabel("ID: ", 5, 70);
+        Label labelInvestmentName = createLabel("Investment Name", 5.0, 110.0);
+        Label labelInvestmentAmount = createLabel("Amount", 5.0, 150.0);
+        Label labelInvestmentDate = createLabel("Date", 5.0, 190.0);
+        Label labelInvestmentDescription = createLabel("Description", 5.0, 230.0);
 
         // ComboBox
-        ComboBox<String> choiceBoxChooseClient = new ComboBox<>();
-        choiceBoxChooseClient.setLayoutX(165);
-        choiceBoxChooseClient.setLayoutY(30);
-        choiceBoxChooseClient.setPrefHeight(35);
-        choiceBoxChooseClient.setPrefWidth(200);
-        choiceBoxChooseClient.getStyleClass().add("textfield-design");
-        choiceBoxChooseClient.getStylesheets().add(compsciia.class.getResource("stylesheet.css").toExternalForm());
-
-        // Adding clients to ComboBox
+        ComboBox<String> comboBoxChooseClient = new ComboBox<>();
+        comboBoxChooseClient.setLayoutX(155);
+        comboBoxChooseClient.setLayoutY(30);
+        comboBoxChooseClient.setPrefHeight(35);
+        comboBoxChooseClient.setPrefWidth(200);
+        comboBoxChooseClient.getStyleClass().add("textfield-design");
+        comboBoxChooseClient.getStylesheets().add(compsciia.class.getResource("stylesheet.css").toExternalForm());
         List<String> clientNames = new ArrayList<>();
         for (Client client : clients.get()) {
             clientNames.add(client.getClientFirstName() + " " + client.getClientLastName() + " (" + client.getClientId() + ")");
         }
         ObservableList<String> clientNamesObservableList = FXCollections.observableArrayList(clientNames);
-        choiceBoxChooseClient.setItems(clientNamesObservableList);
+        comboBoxChooseClient.setItems(clientNamesObservableList);
 
         // TextFields
-        TextField textFieldInvestmentName = createTextField(165.0, 70.0, 35.0);
+        TextField textFieldInvestmentName = createTextField(155.0, 110.0, 35.0);
 
-        TextField textFieldInvestmentAmount = createTextField(165.0, 110.0, 35.0);
-        // Set up the TextFormatter to accept only Double input
+        TextField textFieldInvestmentAmount = createTextField(155.0, 150.0, 35.0);
         Pattern validDoubleInput = Pattern.compile("-?(([1-9][0-9]*)|0)?(\\.[0-9]*)?");
         UnaryOperator<TextFormatter.Change> filter = change -> {
             String newText = change.getControlNewText();
@@ -231,47 +229,90 @@ public class ClientRecordsPane {
         textFieldInvestmentAmount.setTextFormatter(textFormatter);
 
         DatePicker fieldInvestmentDate = new DatePicker();
-        fieldInvestmentDate.setLayoutX(165);
-        fieldInvestmentDate.setLayoutY(150);
+        fieldInvestmentDate.setLayoutX(155);
+        fieldInvestmentDate.setLayoutY(190);
         fieldInvestmentDate.setPrefHeight(35);
         fieldInvestmentDate.setPrefWidth(200);
         fieldInvestmentDate.getStyleClass().add("textfield-design");
         fieldInvestmentDate.getStylesheets().add(compsciia.class.getResource("stylesheet.css").toExternalForm());
 
-        TextField textFieldInvestmentDescription = createTextField(165.0, 190.0, 100.0);
+        TextField textFieldInvestmentDescription = createTextField(155.0, 230.0, 100.0);
 
 //        // Investments table
-//        int comboBoxSelectedClientId = Integer.parseInt(choiceBoxChooseClient.getSelectionModel().getSelectedItem().split("\\(")[1].split("\\)")[0]);
+//        int comboBoxSelectedClientId = Integer.parseInt(comboBoxChooseClient.getSelectionModel().getSelectedItem().split("\\(")[1].split("\\)")[0]);
 //        AtomicReference<ArrayList<Investment>> investments = new AtomicReference<>(InvestmentService.getAllInvestmentsFromDatabaseForClient(comboBoxSelectedClientId));
-//        TableView investmentsTable = createClientTableView(clients.get());
-//        investmentsTable.setLayoutX(360);
-//        investmentsTable.setLayoutY(10);
-//        investmentsTable.setPrefSize(380, 370);
-////        clientsTable.getStyleClass().add("tableview-design");
-//        investmentsTable.getStylesheets().add(compsciia.class.getResource("stylesheet.css").toExternalForm());
-//        investmentsTable.getSelectionModel().selectedItemProperty().addListener((obs, oldSelectedInvestment, newSelectedInvestment) -> {
-//            if (newSelectedInvestment != null) {
-//                System.out.println("Selected Investment: " + newSelectedInvestment);
-//                int selectedInvestmentClientId = ((Investment)newSelectedInvestment).getClientId();
-//                choiceBoxChooseClient.getSelectionModel().select(clients.get().indexOf(ClientService.getClientFromDatabase(selectedInvestmentClientId)));
-//                textFieldInvestmentName.setText(((Investment)newSelectedInvestment).getInvestmentName());
-//                textFieldInvestmentAmount.setText(((Investment)newSelectedInvestment).getInvestmentAmount());
-//                fieldInvestmentDate.setValue(((Investment)newSelectedInvestment).getInvestmentDate());
-//                textFieldInvestmentDescription.setText(((Investment)newSelectedInvestment).getInvestmentDescription());
-//            } else {
-//                System.out.println("No client selected.");
-//            }
-//        });
+        AtomicReference<ArrayList<Investment>> investments = new AtomicReference<>();
+        TableView investmentsTable = createInvestmentTableView();
+        investmentsTable.setLayoutX(360);
+        investmentsTable.setLayoutY(10);
+        investmentsTable.setPrefSize(380, 370);
+//        clientsTable.getStyleClass().add("tableview-design");
+        investmentsTable.getStylesheets().add(compsciia.class.getResource("stylesheet.css").toExternalForm());
+        comboBoxChooseClient.setOnAction(e -> {
+            int comboBoxSelectedClientId = Integer.parseInt(comboBoxChooseClient.getSelectionModel().getSelectedItem().split("\\(")[1].split("\\)")[0]);
+            investments.set(InvestmentService.getAllInvestmentsFromDatabaseForClient(comboBoxSelectedClientId));
+            System.out.println("Selected Client ID: " + comboBoxSelectedClientId);
+            setInvestmentTableViewItems(investmentsTable, investments.get());
+        });
+        investmentsTable.getSelectionModel().selectedItemProperty().addListener((obs, oldSelectedInvestment, newSelectedInvestment) -> {
+            if (newSelectedInvestment != null) {
+                System.out.println("Selected Investment: " + newSelectedInvestment);
+                int selectedInvestmentClientId = ((Investment)newSelectedInvestment).getClientId();
+//                comboBoxChooseClient.getSelectionModel().select(clients.get().indexOf(ClientService.getClientFromDatabase(selectedInvestmentClientId)));
+                labelInvestmentID.setText("ID: " + ((Investment)newSelectedInvestment).getInvestmentId());
+                textFieldInvestmentName.setText(((Investment)newSelectedInvestment).getInvestmentName());
+                textFieldInvestmentAmount.setText(((Investment)newSelectedInvestment).getInvestmentAmount());
+                fieldInvestmentDate.setValue(((Investment)newSelectedInvestment).getInvestmentDate());
+                textFieldInvestmentDescription.setText(((Investment)newSelectedInvestment).getInvestmentDescription());
+            } else {
+                System.out.println("No client selected.");
+            }
+        });
 
         // Buttons
-        Button investmentClearButton = createButton("Clear", 15.0, 300.0, 125.0);
-        Button addNewInvestmentButton = createButton("Add New Investment", 205.0, 300.0, 150.0);
+        Button investmentDeleteButton = createButton("Delete", 15.0, 390.0, 100.0);
+        Button investmentUpdateButton = createButton("Update", 120.0, 390.0, 100.0);
+        Button investmentClearButton = createButton("Clear", 225.0, 390.0, 120.0);
+        Button investmentPrintAllButton = createButton("Print All Investment Data", 370.0, 390.0, 150.0);
+        investmentPrintAllButton.disableProperty().bind(comboBoxChooseClient.valueProperty().isNull());
+
+        investmentDeleteButton.setOnAction(e ->{
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+            alert.setTitle("Delete Investment");
+            alert.setHeaderText(null);
+            alert.setContentText("Are you sure you want to delete this investment?");
+            Optional<ButtonType> buttonType = alert.showAndWait();
+            if(buttonType.isPresent() && buttonType.get().equals(ButtonType.OK)){
+                Investment selectedInvestment = (Investment) investmentsTable.getSelectionModel().getSelectedItem();
+                InvestmentService.deleteInvestmentFromDatabase(selectedInvestment.getInvestmentId());
+                int comboBoxSelectedClientId = Integer.parseInt(comboBoxChooseClient.getSelectionModel().getSelectedItem().split("\\(")[1].split("\\)")[0]);
+                investments.set(InvestmentService.getAllInvestmentsFromDatabaseForClient(comboBoxSelectedClientId));
+                setInvestmentTableViewItems(investmentsTable, investments.get());
+            }
+        });
+
+        investmentClearButton.setOnAction(e -> {
+            labelInvestmentID.setText("ID: ");
+            textFieldInvestmentName.clear();
+            textFieldInvestmentAmount.clear();
+            fieldInvestmentDate.setValue(null);
+            textFieldInvestmentDescription.clear();
+        });
+
+        investmentUpdateButton.setOnAction(e -> {
+            Investment selectedInvestment = (Investment) investmentsTable.getSelectionModel().getSelectedItem();
+            InvestmentService.updateInvestmentInDatabase(selectedInvestment.getInvestmentId(), textFieldInvestmentName.getText(), Double.parseDouble(textFieldInvestmentAmount.getText()), fieldInvestmentDate.getValue(), textFieldInvestmentDescription.getText());
+            int comboBoxSelectedClientId = Integer.parseInt(comboBoxChooseClient.getSelectionModel().getSelectedItem().split("\\(")[1].split("\\)")[0]);
+            investments.set(InvestmentService.getAllInvestmentsFromDatabaseForClient(comboBoxSelectedClientId));
+            setInvestmentTableViewItems(investmentsTable, investments.get());
+        });
 
         // Adding children to AnchorPane
         investmentEntryAnchorPane.getChildren().addAll(
-                labelChooseClient, labelInvestmentName, labelInvestmentAmount, labelInvestmentDate, labelInvestmentDescription,
-                choiceBoxChooseClient, textFieldInvestmentName, textFieldInvestmentAmount, fieldInvestmentDate, textFieldInvestmentDescription,
-                investmentClearButton, addNewInvestmentButton
+                labelChooseClient, labelInvestmentID,labelInvestmentName, labelInvestmentAmount, labelInvestmentDate, labelInvestmentDescription,
+                comboBoxChooseClient, textFieldInvestmentName, textFieldInvestmentAmount, fieldInvestmentDate, textFieldInvestmentDescription,
+                investmentClearButton, investmentDeleteButton, investmentPrintAllButton, investmentUpdateButton,
+                investmentsTable
         );
 
         // Setting content for the Investment Entry Tab
@@ -355,6 +396,35 @@ public class ClientRecordsPane {
         clientsTable.setItems(clientsObservableList);
 
         return clientsTable;
+    }
+
+    private static TableView createInvestmentTableView(){
+        TableView investmentsTable = new TableView();
+        TableColumn<Investment, Integer> investmentIdColumn = new TableColumn<>("Investment ID");
+        investmentIdColumn.setCellValueFactory(new PropertyValueFactory<>("investmentId"));
+
+        TableColumn<Investment, String> investmentNameColumn = new TableColumn<>("Name");
+        investmentNameColumn.setCellValueFactory(new PropertyValueFactory<>("investmentName"));
+
+        TableColumn<Investment, Double> investmentAmountColumn = new TableColumn<>("Amount");
+        investmentAmountColumn.setCellValueFactory(new PropertyValueFactory<>("investmentAmount"));
+
+        TableColumn<Investment, LocalDate> investmentDateColumn = new TableColumn<>("Date");
+        investmentDateColumn.setCellValueFactory(new PropertyValueFactory<>("investmentDate"));
+
+        TableColumn<Investment, String> investmentDescriptionColumn = new TableColumn<>("Description");
+        investmentDescriptionColumn.setCellValueFactory(new PropertyValueFactory<>("investmentDescription"));
+
+        investmentsTable.getColumns().addAll(investmentIdColumn, investmentNameColumn, investmentAmountColumn, investmentDateColumn, investmentDescriptionColumn);
+
+        // Remember to use setInvestmentTableViewItems() to set values for TableView
+
+        return investmentsTable;
+    }
+
+    private static void setInvestmentTableViewItems(TableView investmentsTable, ArrayList<Investment> investments){
+        ObservableList<Investment> investmentsObservableList = FXCollections.observableArrayList(investments);
+        investmentsTable.setItems(investmentsObservableList);
     }
 
     private static void isValidClientUpdate(int client_id, String client_first_name, String client_last_name, String client_email, String client_phone_number, LocalDate client_date_of_birth, String client_address, String client_registered_id){

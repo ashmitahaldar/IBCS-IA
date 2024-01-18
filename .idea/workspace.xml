@@ -4,17 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="2651dba4-d7fa-4278-b443-2b3640fa4299" name="Changes" comment="Built Add New pane with working client and investment entries">
-      <change afterPath="$PROJECT_DIR$/src/main/resources/com/example/compsciia/defaultImage.jpg" afterDir="false" />
+    <list default="true" id="2651dba4-d7fa-4278-b443-2b3640fa4299" name="Changes" comment="Built Client records section of &quot;Client Records&quot; pane, investment records section left">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/compsciia/util/ClientService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/compsciia/util/ClientService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/compsciia/util/InvestmentService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/compsciia/util/InvestmentService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/compsciia/util/UserService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/compsciia/util/UserService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/compsciia/util/Validators.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/compsciia/util/Validators.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/compsciia/views/AddNewPane.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/compsciia/views/AddNewPane.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/example/compsciia/views/ClientRecordsPane.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/compsciia/views/ClientRecordsPane.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/compsciia/views/ProfilePane.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/compsciia/views/ProfilePane.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/com/example/compsciia/home.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/com/example/compsciia/home.fxml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -130,7 +122,8 @@
       <workItem from="1705388402182" duration="12771000" />
       <workItem from="1705459724941" duration="14144000" />
       <workItem from="1705499510109" duration="342000" />
-      <workItem from="1705499873661" duration="4013000" />
+      <workItem from="1705499873661" duration="4102000" />
+      <workItem from="1705563688021" duration="4728000" />
     </task>
     <task id="LOCAL-00001" summary="built login/signup system and constructed navbar">
       <option name="closed" value="true" />
@@ -172,7 +165,15 @@
       <option name="project" value="LOCAL" />
       <updated>1705426166310</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="Built Client records section of &quot;Client Records&quot; pane, investment records section left">
+      <option name="closed" value="true" />
+      <created>1705510983030</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1705510983030</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -207,7 +208,8 @@
     <MESSAGE value="minor edits, created Validators class" />
     <MESSAGE value="minor edits" />
     <MESSAGE value="Built Add New pane with working client and investment entries" />
-    <option name="LAST_COMMIT_MESSAGE" value="Built Add New pane with working client and investment entries" />
+    <MESSAGE value="Built Client records section of &quot;Client Records&quot; pane, investment records section left" />
+    <option name="LAST_COMMIT_MESSAGE" value="Built Client records section of &quot;Client Records&quot; pane, investment records section left" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
