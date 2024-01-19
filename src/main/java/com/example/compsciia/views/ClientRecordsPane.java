@@ -261,7 +261,7 @@ public class ClientRecordsPane {
 //                comboBoxChooseClient.getSelectionModel().select(clients.get().indexOf(ClientService.getClientFromDatabase(selectedInvestmentClientId)));
                 labelInvestmentID.setText("ID: " + ((Investment)newSelectedInvestment).getInvestmentId());
                 textFieldInvestmentName.setText(((Investment)newSelectedInvestment).getInvestmentName());
-                textFieldInvestmentAmount.setText(((Investment)newSelectedInvestment).getInvestmentAmount());
+                textFieldInvestmentAmount.setText(Double.toString(((Investment)newSelectedInvestment).getInvestmentAmount()));
                 fieldInvestmentDate.setValue(((Investment)newSelectedInvestment).getInvestmentDate());
                 textFieldInvestmentDescription.setText(((Investment)newSelectedInvestment).getInvestmentDescription());
             } else {
