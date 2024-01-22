@@ -44,11 +44,11 @@ public class UserService {
         }
     }
 
-    public static void deleteUserFromDatabase(String user_id){
+    public static void deleteUserFromDatabase(int user_id){
         String query = "DELETE FROM app_users WHERE id = ?";
 
         try (Connection conn = database.connect(); PreparedStatement stmt = Objects.requireNonNull(conn).prepareStatement(query)) {
-            stmt.setString(1, user_id);
+            stmt.setInt(1, user_id);
             stmt.executeUpdate();
             System.out.println("ID: " + user_id);
             System.out.println("User deleted from database");
@@ -147,6 +147,20 @@ public class UserService {
             System.out.println(e.getMessage());
         }
         return users;
+    }
+
+    public static void clearUserAccountData(int user_id){
+        ArrayList<Integer> clientIds = new ArrayList<>(ClientService.getAllClientIDsFromDatabaseForUser(user_id));
+        for (Integer clientId : clientIds) {
+            InvestmentService.clearAllInvestmentsFromDatabaseForClient(clientId);
+            ClientService.deleteClientFromDatabase(clientId);
+        }
+        System.out.println("All client data cleared from database");
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("Account Data Cleared");
+        alert.setHeaderText(null);
+        alert.setContentText("All client data and associated investment data for the user has been cleared from the database successfully.");
+        alert.showAndWait();
     }
 
     public static void updateUserImageInDatabase(Integer userId, File imageFile){

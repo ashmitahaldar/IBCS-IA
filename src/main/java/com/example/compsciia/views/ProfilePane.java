@@ -9,11 +9,13 @@ import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Circle;
 import javafx.scene.text.Font;
 import javafx.stage.FileChooser;
+import javafx.stage.Stage;
 
 import java.io.File;
 import java.time.LocalDate;
@@ -21,7 +23,7 @@ import java.util.Objects;
 import java.util.concurrent.atomic.AtomicReference;
 
 public class ProfilePane {
-    public static AnchorPane createPane(Integer userId) {
+    public static AnchorPane createPane(Integer userId, Stage stage) {
         AtomicReference<User> user = new AtomicReference<>(getCurrentUser(userId));
         final FileChooser fileChooser = new FileChooser();
 
@@ -180,6 +182,7 @@ public class ProfilePane {
         deleteAccountButton.setPrefHeight(40.0);
         deleteAccountButton.getStyleClass().add("button-design");
         deleteAccountButton.getStylesheets().add(compsciia.class.getResource("stylesheet.css").toExternalForm());
+        deleteAccountButton.setOnAction(e -> deleteUserAccount(userId, stage));
 
         Button clearAccountDataButton = new Button("Clear Account Data");
         clearAccountDataButton.setLayoutX(450.0);
@@ -188,6 +191,7 @@ public class ProfilePane {
         clearAccountDataButton.setPrefHeight(40.0);
         clearAccountDataButton.getStyleClass().add("button-design");
         clearAccountDataButton.getStylesheets().add(compsciia.class.getResource("stylesheet.css").toExternalForm());
+        clearAccountDataButton.setOnAction(e -> deleteUserAccountData(userId));
 
         Button revertEditsButton = new Button("Revert Edits");
         revertEditsButton.setLayoutX(180.0);
@@ -281,5 +285,89 @@ public class ProfilePane {
         if (newUsername.equals(oldUsername)){
             return true;
         } else return (newUsername.matches("[a-zA-Z0-9]+") && !UserService.checkIfUsernameIsTaken(newUsername));
+    }
+    private static void deleteUserAccountData(Integer userId) {
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("Clear Account Data");
+        alert.setHeaderText(null);
+        alert.setContentText("Are you sure you want to clear all your account data?");
+        ButtonType buttonType = alert.showAndWait().orElse(ButtonType.CANCEL);
+        if (buttonType.equals(ButtonType.OK)) {
+            Dialog<String> dialog = new Dialog<>();
+            dialog.setTitle("Clear Account Data");
+            dialog.setHeaderText("Please enter your password to confirm clearing of your account data:");
+            dialog.setResizable(true);
+            PasswordField passwordField = new PasswordField();
+            passwordField.setPrefSize(200, 100);
+            passwordField.setPromptText("Password");
+            ButtonType confirmButtonType = new ButtonType("Confirm", ButtonBar.ButtonData.OK_DONE);
+            dialog.getDialogPane().getButtonTypes().addAll(confirmButtonType, ButtonType.CANCEL);
+            dialog.getDialogPane().setContent(passwordField);
+            dialog.setResultConverter(dialogButton -> {
+                if (dialogButton == confirmButtonType) {
+                    return passwordField.getText();
+                }
+                return null;
+            });
+            dialog.showAndWait().ifPresent(password -> {
+                if (password.equals(UserService.getUserFromDatabase(userId).getPassword())) {
+                    UserService.clearUserAccountData(userId);
+                    Alert alert1 = new Alert(Alert.AlertType.INFORMATION);
+                    alert1.setTitle("Account Data Cleared");
+                    alert1.setHeaderText(null);
+                    alert1.setContentText("Your account data has been cleared successfully.");
+                    alert1.showAndWait();
+                } else {
+                    Alert alert1 = new Alert(Alert.AlertType.ERROR);
+                    alert1.setTitle("Incorrect Password");
+                    alert1.setHeaderText(null);
+                    alert1.setContentText("The password you entered is incorrect.");
+                    alert1.showAndWait();
+                }
+            });
+        }
+    }
+    private static void deleteUserAccount(Integer userId, Stage stage) {
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("Delete Account");
+        alert.setHeaderText(null);
+        alert.setContentText("Are you sure you want to delete your account?");
+        ButtonType buttonType = alert.showAndWait().orElse(ButtonType.CANCEL);
+        if (buttonType.equals(ButtonType.OK)) {
+            Dialog<String> dialog = new Dialog<>();
+            dialog.setTitle("Delete Account");
+            dialog.setHeaderText("Please enter your password to confirm deletion of your account:");
+            dialog.setResizable(true);
+            dialog.getDialogPane().setPrefSize(300, 200);
+            PasswordField passwordField = new PasswordField();
+            passwordField.setPromptText("Password");
+            ButtonType confirmButtonType = new ButtonType("Confirm", ButtonBar.ButtonData.OK_DONE);
+            dialog.getDialogPane().getButtonTypes().addAll(confirmButtonType, ButtonType.CANCEL);
+            dialog.getDialogPane().setContent(passwordField);
+            dialog.setResultConverter(dialogButton -> {
+                if (dialogButton == confirmButtonType) {
+                    return passwordField.getText();
+                }
+                return null;
+            });
+            dialog.showAndWait().ifPresent(password -> {
+                if (password.equals(UserService.getUserFromDatabase(userId).getPassword())) {
+                    UserService.deleteUserFromDatabase(userId);
+                    loginPage loginpage = new loginPage();
+                    stage.setScene(loginpage.createScene(stage, new signUpPage()));
+                    Alert alert1 = new Alert(Alert.AlertType.INFORMATION);
+                    alert1.setTitle("Account Deleted");
+                    alert1.setHeaderText(null);
+                    alert1.setContentText("Your account has been deleted successfully.");
+                    alert1.showAndWait();
+                } else {
+                    Alert alert1 = new Alert(Alert.AlertType.ERROR);
+                    alert1.setTitle("Incorrect Password");
+                    alert1.setHeaderText(null);
+                    alert1.setContentText("The password you entered is incorrect.");
+                    alert1.showAndWait();
+                }
+            });
+        }
     }
 }

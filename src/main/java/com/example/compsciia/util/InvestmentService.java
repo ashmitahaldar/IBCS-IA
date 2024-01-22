@@ -103,6 +103,25 @@ public class InvestmentService {
         }
     }
 
+    public static void clearAllInvestmentsFromDatabaseForClient(int client_id){
+        String query = "DELETE FROM investments WHERE client_id = ?";
+
+        try (Connection conn = database.connect(); PreparedStatement stmt = Objects.requireNonNull(conn).prepareStatement(query)) {
+            stmt.setInt(1, client_id);
+            stmt.executeUpdate();
+            System.out.println("Client ID: " + client_id);
+            System.out.println("Investments deleted from database");
+//            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+//            alert.setTitle("Investments Deleted");
+//            alert.setHeaderText(null);
+//            alert.setContentText("All investments for client with ID " + client_id + " have been deleted from the database successfully.");
+//            alert.showAndWait();
+            System.out.println("All investments for client with ID " + client_id + " have been deleted from the database successfully.");
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
     public static ArrayList<Investment> getAllInvestmentsFromDatabase(){
         String query = "SELECT * FROM investments";
         ArrayList<Investment> investments = new ArrayList<>();
@@ -136,6 +155,24 @@ public class InvestmentService {
             System.out.println(e.getMessage());
         }
         return investments;
+    }
+
+    public static ArrayList<Integer> getAllInvestmentIDsFromDatabaseForClient(int client_id){
+        String query = "SELECT investment_id FROM investments WHERE client_id = ?";
+        ArrayList<Integer> investmentIDs = new ArrayList<>();
+
+        try (Connection conn = database.connect(); PreparedStatement stmt = Objects.requireNonNull(conn).prepareStatement(query)) {
+            stmt.setInt(1, client_id);
+            ResultSet rs = stmt.executeQuery();
+            while (rs.next()) {
+                int investmentID = rs.getInt(1);
+                investmentIDs.add(investmentID);
+                System.out.println("Investment ID " + investmentID + " retrieved from database");
+            }
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+        return investmentIDs;
     }
 
     public static Integer getNumberOfInvestmentsFromDatabaseForUser(int user_id){

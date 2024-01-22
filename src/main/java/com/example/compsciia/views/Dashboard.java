@@ -135,7 +135,7 @@ public class Dashboard {
         profileButton.setOnAction(e -> {
             try {
                 dashboardUpdate(userId, user, profilePicture, userLabel);
-                new PaneSwitcher(centerPane, ProfilePane.createPane(userId));
+                new PaneSwitcher(centerPane, ProfilePane.createPane(userId, stage));
             } catch (Exception exception) {
                 exception.printStackTrace();
             }
