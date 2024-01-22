@@ -17,11 +17,12 @@ import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
 import org.kordamp.ikonli.javafx.FontIcon;
 
+import java.io.IOException;
 import java.util.Optional;
 import java.util.concurrent.atomic.AtomicReference;
 
 public class Dashboard {
-    public static Scene createScene(Stage stage, loginPage loginPage, Integer userId){
+    public static Scene createScene(Stage stage, loginPage loginPage, Integer userId) throws IOException {
         AtomicReference<User> user = new AtomicReference<>(UserService.getUserFromDatabase(userId));
 
         BorderPane root = new BorderPane();
@@ -31,6 +32,7 @@ public class Dashboard {
         AnchorPane centerPane = new AnchorPane();
         centerPane.setPrefSize(750, 600);
         centerPane.getStylesheets().add(compsciia.class.getResource("stylesheet.css").toExternalForm());
+        new PaneSwitcher(centerPane, DashboardPane.createPane(userId));
 
         // Left VBox
         VBox leftVBox = new VBox();

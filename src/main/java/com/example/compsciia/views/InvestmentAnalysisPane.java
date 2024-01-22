@@ -68,6 +68,7 @@ public class InvestmentAnalysisPane {
         lineChart.setLayoutY(50.0);
         lineChart.setPrefHeight(380.0);
         lineChart.setPrefWidth(450.0);
+        lineChart.getXAxis().setAnimated(false);
 
         Label chooseClientLabel = new Label("Choose Client:");
         chooseClientLabel.setLayoutX(15.0);

@@ -169,4 +169,57 @@ public static void deleteClientFromDatabase(int client_id){
         return clients;
     }
 
+    public static ArrayList<String> getAllClientNamesFromDatabaseForUser(int user_id){
+        String query = "SELECT client_first_name, client_last_name FROM clients WHERE user_id = ?";
+        ArrayList<String> clientNames = new ArrayList<>();
+
+        try (Connection conn = database.connect(); PreparedStatement stmt = Objects.requireNonNull(conn).prepareStatement(query)) {
+            stmt.setInt(1, user_id);
+            ResultSet rs = stmt.executeQuery();
+            while (rs.next()) {
+                String clientName = rs.getString("client_first_name") + " " + rs.getString("client_last_name");
+                clientNames.add(clientName);
+                System.out.println("Client with name " + clientName + " retrieved from database");
+            }
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+        return clientNames;
+    }
+
+    public static ArrayList<Integer> getAllClientIDsFromDatabaseForUser(int user_id){
+        String query = "SELECT client_id FROM clients WHERE user_id = ?";
+        ArrayList<Integer> clientIDs = new ArrayList<>();
+
+        try (Connection conn = database.connect(); PreparedStatement stmt = Objects.requireNonNull(conn).prepareStatement(query)) {
+            stmt.setInt(1, user_id);
+            ResultSet rs = stmt.executeQuery();
+            while (rs.next()) {
+                int clientID = rs.getInt("client_id");
+                clientIDs.add(clientID);
+                System.out.println("Client with ID " + clientID + " retrieved from database");
+            }
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+        return clientIDs;
+    }
+
+    public static Integer getNumberOfClientsFromDatabaseForUser(int user_id){
+        String query = "SELECT COUNT(*) FROM clients WHERE user_id = ?";
+        int totalNumberOfClients = 0;
+
+        try (Connection conn = database.connect(); PreparedStatement stmt = Objects.requireNonNull(conn).prepareStatement(query)) {
+            stmt.setInt(1, user_id);
+            ResultSet rs = stmt.executeQuery();
+            while (rs.next()) {
+                totalNumberOfClients = rs.getInt(1);
+                System.out.println("Number of clients for user with ID " + user_id + " retrieved from database");
+            }
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+        return totalNumberOfClients;
+    }
+
 }

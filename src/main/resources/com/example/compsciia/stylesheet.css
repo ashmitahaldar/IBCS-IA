@@ -1,4 +1,5 @@
 /* #FFA670 #FFD170 #FFBE70 #FF8D70 #FFE370*/
+/* set variables for color*/
 
 .login-bg{
     -fx-background-color: linear-gradient(to bottom right, #FF8D70, #FFD170);
@@ -76,4 +77,24 @@
     -fx-border-width: 0;
     -fx-border-insets: 0 0 0 0;
     -fx-border-radius: 0;
+}
+
+.list-view-design{
+    -fx-background-color: #FFBE70;
+    -fx-background-radius: 10px;
+    -fx-border-color: gray;
+    -fx-cell-size: 30px;
+    -fx-border-width: 2px;
+    -fx-border-radius: 10px;
+    -fx-font-size: 20px;
+    -fx-padding: 10px;
+}
+
+.pane-design{
+    -fx-background-color: #FFE370;
+    -fx-background-radius: 10px;
+    -fx-border-color: gray;
+    -fx-border-width: 2px;
+    -fx-border-radius: 10px;
+    -fx-padding: 10px;
 }

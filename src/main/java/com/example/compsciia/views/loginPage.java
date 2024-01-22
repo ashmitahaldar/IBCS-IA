@@ -19,6 +19,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
+import java.io.IOException;
 import java.util.Objects;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -118,7 +119,11 @@ public class loginPage {
         loginButton.setPrefWidth(80.0);
         loginButton.getStyleClass().add("button-design");
         loginButton.setOnAction(event -> {
-            validate(emailTextField.getText(), passwordField.getText(), stage);
+            try {
+                validate(emailTextField.getText(), passwordField.getText(), stage);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
             emailTextField.clear();
             passwordField.clear();
         });
@@ -144,7 +149,7 @@ public class loginPage {
         return scene;
     }
 
-    private void validate(String email, String password, Stage stage) {
+    private void validate(String email, String password, Stage stage) throws IOException {
         if (Validators.isValidUser(email, password)){
             System.out.println("User is valid");
             User user = UserService.getUserFromDatabase(email, password);

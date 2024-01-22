@@ -9,6 +9,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Date;
 import java.util.Objects;
 import java.util.ArrayList;
 public class InvestmentService {
@@ -135,5 +136,39 @@ public class InvestmentService {
             System.out.println(e.getMessage());
         }
         return investments;
+    }
+
+    public static Integer getNumberOfInvestmentsFromDatabaseForUser(int user_id){
+        String query = "SELECT COUNT(*) FROM investments JOIN public.clients c on investments.client_id = c.client_id WHERE c.user_id = ?";
+        int totalNumberOfInvestments = 0;
+
+        try (Connection conn = database.connect(); PreparedStatement stmt = Objects.requireNonNull(conn).prepareStatement(query)) {
+            stmt.setInt(1, user_id);
+            ResultSet rs = stmt.executeQuery();
+            while (rs.next()) {
+                totalNumberOfInvestments = rs.getInt(1);
+                System.out.println("Number of investments for user with ID " + user_id + " retrieved from database");
+            }
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+        return totalNumberOfInvestments;
+    }
+
+    public static Integer getNumberOfInvestmentsFromDatabaseForClient(int client_id){
+        String query = "SELECT COUNT(*) FROM investments WHERE client_id = ?";
+        int numberOfInvestments = 0;
+
+        try (Connection conn = database.connect(); PreparedStatement stmt = Objects.requireNonNull(conn).prepareStatement(query)) {
+            stmt.setInt(1, client_id);
+            ResultSet rs = stmt.executeQuery();
+            while (rs.next()) {
+                numberOfInvestments = rs.getInt(1);
+                System.out.println("Number of investments for client with ID " + client_id + " retrieved from database");
+            }
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+        return numberOfInvestments;
     }
 }
