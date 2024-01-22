@@ -2,10 +2,11 @@ package com.example.compsciia.views;
 
 import com.example.compsciia.compsciia;
 import com.example.compsciia.models.Client;
-import com.example.compsciia.models.User;
 import com.example.compsciia.util.ClientService;
 import com.example.compsciia.util.InvestmentService;
 import com.example.compsciia.util.Validators;
+import javafx.collections.FXCollections;
+import javafx.concurrent.Task;
 import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
@@ -140,22 +141,38 @@ public class AddNewPane {
         Label labelInvestmentDescription = createLabel("Description", 30.0, 190.0);
 
         // ComboBox
-        ComboBox<String> choiceBoxChooseClient = new ComboBox<>();
-        choiceBoxChooseClient.setLayoutX(180);
-        choiceBoxChooseClient.setLayoutY(30);
-        choiceBoxChooseClient.setPrefHeight(35);
-        choiceBoxChooseClient.setPrefWidth(200);
-        choiceBoxChooseClient.getStyleClass().add("textfield-design");
-        choiceBoxChooseClient.getStylesheets().add(compsciia.class.getResource("stylesheet.css").toExternalForm());
+        ComboBox<String> comboBoxChooseClient = new ComboBox<>();
+        comboBoxChooseClient.setLayoutX(180);
+        comboBoxChooseClient.setLayoutY(30);
+        comboBoxChooseClient.setPrefHeight(35);
+        comboBoxChooseClient.setPrefWidth(200);
+        comboBoxChooseClient.getStyleClass().add("textfield-design");
+        comboBoxChooseClient.getStylesheets().add(compsciia.class.getResource("stylesheet.css").toExternalForm());
 
         // Adding clients to ComboBox
         AtomicReference<ArrayList<Client>> clients = new AtomicReference<>(ClientService.getAllClientsFromDatabaseForUser(userId));
-        List<String> clientNames = new ArrayList<>();
-        for (Client client : clients.get()) {
-            clientNames.add(client.getClientFirstName() + " " + client.getClientLastName() + " (" + client.getClientId() + ")");
-        }
-        javafx.collections.ObservableList<String> clientNamesObservableList = javafx.collections.FXCollections.observableArrayList(clientNames);
-        choiceBoxChooseClient.setItems(clientNamesObservableList);
+        Task<List<String>> getComboBoxClientListTask = new Task<List<String>>() {
+            @Override
+            protected List<String> call() throws Exception {
+                ArrayList<String> clientNames = new ArrayList<>();
+                for (Client client : clients.get()) {
+                    clientNames.add(client.getClientFirstName() + " " + client.getClientLastName() + " (" + client.getClientId() + ")");
+                }
+                return clientNames;
+            }
+        };
+        javafx.collections.ObservableList<String> clientNamesObservableList = FXCollections.observableArrayList();
+        getComboBoxClientListTask.setOnSucceeded(e -> {
+            clientNamesObservableList.setAll(getComboBoxClientListTask.getValue());
+            comboBoxChooseClient.setItems(clientNamesObservableList);
+        });
+        new Thread(getComboBoxClientListTask).start();
+//        List<String> clientNames = new ArrayList<>();
+//        for (Client client : clients.get()) {
+//            clientNames.add(client.getClientFirstName() + " " + client.getClientLastName() + " (" + client.getClientId() + ")");
+//        }
+//        ObservableList<String> clientNamesObservableList = FXCollections.observableArrayList(clientNames);
+//        choiceBoxChooseClient.setItems(clientNamesObservableList);
 
 
         // TextFields
@@ -215,7 +232,7 @@ public class AddNewPane {
             Double investmentAmount = Double.parseDouble(textFieldInvestmentAmount.getText());
             LocalDate investmentDate = fieldInvestmentDate.getValue();
             String investmentDescription = textFieldInvestmentDescription.getText();
-            String clientName = choiceBoxChooseClient.getValue();
+            String clientName = comboBoxChooseClient.getValue();
             String[] clientNameArray = clientName.split(" ");
             String clientFirstName = clientNameArray[0];
             String clientLastName = clientNameArray[1];
@@ -230,7 +247,7 @@ public class AddNewPane {
         // Adding children to AnchorPane
         investmentEntryAnchorPane.getChildren().addAll(
                 labelChooseClient, labelInvestmentName, labelInvestmentAmount, labelInvestmentDate, labelInvestmentDescription,
-                choiceBoxChooseClient, textFieldInvestmentName, textFieldInvestmentAmount, fieldInvestmentDate, textFieldInvestmentDescription,
+                comboBoxChooseClient, textFieldInvestmentName, textFieldInvestmentAmount, fieldInvestmentDate, textFieldInvestmentDescription,
                 investmentClearButton, addNewInvestmentButton
         );
 
@@ -342,6 +359,13 @@ public class AddNewPane {
             alert.setTitle("Error");
             alert.setHeaderText(null);
             alert.setContentText("Please enter a registered ID.");
+            alert.showAndWait();
+        }
+        else if (ClientService.checkIfClientExistsForUserInDatabase(user_id, client_first_name, client_last_name, client_email)) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error");
+            alert.setHeaderText(null);
+            alert.setContentText("Client already exists in database.");
             alert.showAndWait();
         }
         else {

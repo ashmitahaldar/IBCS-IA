@@ -4,6 +4,7 @@ import com.example.compsciia.compsciia;
 import com.example.compsciia.models.User;
 import com.example.compsciia.util.PaneSwitcher;
 import com.example.compsciia.util.UserService;
+import javafx.concurrent.Task;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
@@ -18,6 +19,7 @@ import javafx.scene.layout.BorderPane;
 import org.kordamp.ikonli.javafx.FontIcon;
 
 import java.io.IOException;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.concurrent.atomic.AtomicReference;
 
@@ -50,23 +52,19 @@ public class Dashboard {
         // Second AnchorPane in left VBox
         AnchorPane secondAnchorPane = new AnchorPane();
         secondAnchorPane.setPrefSize(250, 200);
-        Circle profilePicture = new Circle(63, Color.DODGERBLUE);
+        Circle profilePicture = new Circle(63, Color.GREY);
         profilePicture.setCenterX(10);
         profilePicture.setCenterY(0);
         profilePicture.setLayoutX(115);
         profilePicture.setLayoutY(63);
-        Image im = new Image("https://media.istockphoto.com/id/1180184210/photo/sky-cloud-pink-love-sweet-love-color-tone-for-wedding-card-background.jpg?s=612x612&w=0&k=20&c=nm7d0aCwz2CuT-ETUFsI5S08eCnLZQsLhR4pAYJdbP0=",false);
-        if (user.get().getProfileImage() != null) {
-            profilePicture.setFill(new ImagePattern(user.get().getProfileImage()));
-        } else {
-            profilePicture.setFill(new ImagePattern(im));
-        }
+        updateProfilePictureOnNavbar(profilePicture, user);
         Label welcomeLabel = new Label("Welcome!");
         welcomeLabel.setFont(new Font(20));
         welcomeLabel.setPrefSize(100, 25);
         welcomeLabel.setLayoutX(80);
         welcomeLabel.setLayoutY(135);
-        Label userLabel = new Label(user.get().getUsername());
+        Label userLabel = new Label("");
+        updateUsernameOnNavbar(userLabel, user);
         userLabel.setFont(new Font(20));
         userLabel.setPrefSize(200, 25);
         userLabel.setLayoutX(25);
@@ -187,12 +185,36 @@ public class Dashboard {
     }
     private static void dashboardUpdate(Integer userId, AtomicReference<User> user, Circle profilePicture, Label userLabel) {
         user.set(UserService.getUserFromDatabase(userId));
-        userLabel.setText(user.get().getUsername());
-        Image im = new Image("https://media.istockphoto.com/id/1180184210/photo/sky-cloud-pink-love-sweet-love-color-tone-for-wedding-card-background.jpg?s=612x612&w=0&k=20&c=nm7d0aCwz2CuT-ETUFsI5S08eCnLZQsLhR4pAYJdbP0=",false);
-        if (user.get().getProfileImage() != null) {
-            profilePicture.setFill(new ImagePattern(user.get().getProfileImage()));
-        } else {
-            profilePicture.setFill(new ImagePattern(im));
-        }
+        updateProfilePictureOnNavbar(profilePicture, user);
+        updateUsernameOnNavbar(userLabel, user);
+    }
+
+    private static void updateUsernameOnNavbar(Label userLabel, AtomicReference<User> user) {
+        Task<String> getUsernameTask = new Task<String>() {
+            @Override
+            protected String call() throws Exception {
+                return user.get().getUsername();
+            }
+        };
+        getUsernameTask.setOnSucceeded(e -> userLabel.setText(getUsernameTask.getValue()));
+        new Thread(getUsernameTask).start();
+    }
+
+    private static void updateProfilePictureOnNavbar(Circle profilePicture, AtomicReference<User> user){
+        Image im = new Image(Objects.requireNonNull(compsciia.class.getResource("defaultImage.jpg")).toExternalForm(),false);
+        Task<Image> getUserProfilePictureTask = new Task<Image>() {
+            @Override
+            protected Image call() throws Exception {
+                return user.get().getProfileImage();
+            }
+        };
+        getUserProfilePictureTask.setOnSucceeded(e -> {
+            if (getUserProfilePictureTask.getValue() != null) {
+                profilePicture.setFill(new ImagePattern(getUserProfilePictureTask.getValue()));
+            } else {
+                profilePicture.setFill(new ImagePattern(im));
+            }
+        });
+        new Thread(getUserProfilePictureTask).start();
     }
 }

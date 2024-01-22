@@ -9,6 +9,7 @@ import com.example.compsciia.util.InvestmentService;
 import com.example.compsciia.util.Validators;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.concurrent.Task;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
@@ -191,12 +192,28 @@ public class ClientRecordsPane {
         comboBoxChooseClient.setPrefWidth(200);
         comboBoxChooseClient.getStyleClass().add("textfield-design");
         comboBoxChooseClient.getStylesheets().add(compsciia.class.getResource("stylesheet.css").toExternalForm());
-        List<String> clientNames = new ArrayList<>();
-        for (Client client : clients.get()) {
-            clientNames.add(client.getClientFirstName() + " " + client.getClientLastName() + " (" + client.getClientId() + ")");
-        }
-        ObservableList<String> clientNamesObservableList = FXCollections.observableArrayList(clientNames);
-        comboBoxChooseClient.setItems(clientNamesObservableList);
+        Task<List<String>> getComboBoxClientListTask = new Task<List<String>>() {
+            @Override
+            protected List<String> call() throws Exception {
+                ArrayList<String> clientNames = new ArrayList<>();
+                for (Client client : clients.get()) {
+                    clientNames.add(client.getClientFirstName() + " " + client.getClientLastName() + " (" + client.getClientId() + ")");
+                }
+                return clientNames;
+            }
+        };
+        javafx.collections.ObservableList<String> clientNamesObservableList = FXCollections.observableArrayList();
+        getComboBoxClientListTask.setOnSucceeded(e -> {
+            clientNamesObservableList.setAll(getComboBoxClientListTask.getValue());
+            comboBoxChooseClient.setItems(clientNamesObservableList);
+        });
+        new Thread(getComboBoxClientListTask).start();
+        //        List<String> clientNames = new ArrayList<>();
+//        for (Client client : clients.get()) {
+//            clientNames.add(client.getClientFirstName() + " " + client.getClientLastName() + " (" + client.getClientId() + ")");
+//        }
+//        ObservableList<String> clientNamesObservableList = FXCollections.observableArrayList(clientNames);
+//        comboBoxChooseClient.setItems(clientNamesObservableList);
 
         // TextFields
         TextField textFieldInvestmentName = createTextField(155.0, 110.0, 35.0);
@@ -246,7 +263,6 @@ public class ClientRecordsPane {
         investmentsTable.setLayoutX(360);
         investmentsTable.setLayoutY(10);
         investmentsTable.setPrefSize(380, 370);
-//        clientsTable.getStyleClass().add("tableview-design");
         investmentsTable.getStylesheets().add(compsciia.class.getResource("stylesheet.css").toExternalForm());
         comboBoxChooseClient.setOnAction(e -> {
             int comboBoxSelectedClientId = Integer.parseInt(comboBoxChooseClient.getSelectionModel().getSelectedItem().split("\\(")[1].split("\\)")[0]);

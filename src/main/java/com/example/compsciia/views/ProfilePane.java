@@ -4,6 +4,7 @@ import com.example.compsciia.compsciia;
 import com.example.compsciia.models.User;
 import com.example.compsciia.util.UserService;
 import com.example.compsciia.util.Validators;
+import javafx.concurrent.Task;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
@@ -16,6 +17,7 @@ import javafx.stage.FileChooser;
 
 import java.io.File;
 import java.time.LocalDate;
+import java.util.Objects;
 import java.util.concurrent.atomic.AtomicReference;
 
 public class ProfilePane {
@@ -110,11 +112,21 @@ public class ProfilePane {
 
         // Circle in Center AnchorPane
         Circle profilePicture = new Circle(600.0, 150.0, 120.0, Color.DODGERBLUE);
-        if (user.get().getProfileImage() != null) {
-            profilePicture.setFill(new ImagePattern(user.get().getProfileImage()));
-        } else {
-            profilePicture.setFill(new ImagePattern(new Image("https://media.istockphoto.com/id/1180184210/photo/sky-cloud-pink-love-sweet-love-color-tone-for-wedding-card-background.jpg?s=612x612&w=0&k=20&c=nm7d0aCwz2CuT-ETUFsI5S08eCnLZQsLhR4pAYJdbP0=",false)));
-        }
+        Image im = new Image(Objects.requireNonNull(compsciia.class.getResource("defaultImage.jpg")).toExternalForm(),false);
+        Task<Image> getUserProfilePictureTask = new Task<Image>() {
+            @Override
+            protected Image call() throws Exception {
+                return user.get().getProfileImage();
+            }
+        };
+        getUserProfilePictureTask.setOnSucceeded(e -> {
+            if (getUserProfilePictureTask.getValue() != null) {
+                profilePicture.setFill(new ImagePattern(getUserProfilePictureTask.getValue()));
+            } else {
+                profilePicture.setFill(new ImagePattern(im));
+            }
+        });
+        new Thread(getUserProfilePictureTask).start();
         centerAnchorPane.getChildren().add(profilePicture);
 
         // Buttons in Center AnchorPane
@@ -268,6 +280,6 @@ public class ProfilePane {
         String oldUsername = UserService.getUserFromDatabase(userId).getUsername();
         if (newUsername.equals(oldUsername)){
             return true;
-        } else return (newUsername.matches("[a-zA-Z0-9]+") && !UserService.isUsernameTaken(newUsername));
+        } else return (newUsername.matches("[a-zA-Z0-9]+") && !UserService.checkIfUsernameIsTaken(newUsername));
     }
 }

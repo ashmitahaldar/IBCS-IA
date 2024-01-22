@@ -4,17 +4,14 @@ import com.example.compsciia.models.User;
 import com.example.compsciia.util.UserService;
 import com.example.compsciia.util.Validators;
 
+import javafx.application.Platform;
 import javafx.collections.FXCollections;
+import javafx.concurrent.Task;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.ChoiceBox;
-import javafx.scene.control.Label;
-import javafx.scene.control.PasswordField;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.control.Alert;
 
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
@@ -153,8 +150,24 @@ public class loginPage {
         if (Validators.isValidUser(email, password)){
             System.out.println("User is valid");
             User user = UserService.getUserFromDatabase(email, password);
-            showLoginPopup(user);
-            stage.setScene(Dashboard.createScene(stage, new loginPage(), user.getId()));
+            Task<Scene> switchSceneToDashboard = new Task<Scene>() {
+                @Override
+                protected Scene call() throws Exception {
+                    loginPage loginpage = new loginPage();
+                    int userId = user.getId();
+                    return Dashboard.createScene(stage, loginpage, userId);
+                }
+            };
+            switchSceneToDashboard.setOnRunning(e -> showLoginPopup(user));
+            switchSceneToDashboard.setOnSucceeded(e ->
+                    Platform.runLater(() -> {
+                        try {
+                            stage.setScene(switchSceneToDashboard.getValue());
+                        } catch (Exception exception) {
+                            throw new RuntimeException(exception);
+                        }
+                    }));
+            new Thread(switchSceneToDashboard).start();
         } else {
             if (!Validators.isValidEmail(email) || !Validators.isValidPassword(password)){
                 if (!Validators.isValidEmail(email)){

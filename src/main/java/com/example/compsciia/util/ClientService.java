@@ -222,4 +222,23 @@ public static void deleteClientFromDatabase(int client_id){
         return totalNumberOfClients;
     }
 
+    public static boolean checkIfClientExistsForUserInDatabase(int userId, String newClientFirstName, String newClientLastName, String newClientEmail){
+        String query = "SELECT * FROM clients WHERE user_id = ? AND client_first_name = ? AND client_last_name = ? AND client_email = ?";
+        boolean clientExists = false;
+
+        try (Connection conn = database.connect(); PreparedStatement stmt = Objects.requireNonNull(conn).prepareStatement(query)) {
+            stmt.setInt(1, userId);
+            stmt.setString(2, newClientFirstName);
+            stmt.setString(3, newClientLastName);
+            stmt.setString(4, newClientEmail);
+            ResultSet rs = stmt.executeQuery();
+            while (rs.next()) {
+                clientExists = true;
+                System.out.println("Client with name " + newClientFirstName + " " + newClientLastName + " and email " + newClientEmail + " exists in database");
+            }
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+        return clientExists;
+    }
 }

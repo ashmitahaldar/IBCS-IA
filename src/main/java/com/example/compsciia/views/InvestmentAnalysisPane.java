@@ -7,6 +7,7 @@ import com.example.compsciia.util.ClientService;
 import com.example.compsciia.util.InvestmentService;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.concurrent.Task;
 import javafx.scene.chart.CategoryAxis;
 import javafx.scene.chart.LineChart;
 import javafx.scene.chart.NumberAxis;
@@ -19,6 +20,8 @@ import javafx.scene.text.Font;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicReference;
 
@@ -86,12 +89,22 @@ public class InvestmentAnalysisPane {
         comboBox.setPrefWidth(180.0);
         comboBox.getStyleClass().add("textfield-design");
         comboBox.getStylesheets().add(compsciia.class.getResource("stylesheet.css").toExternalForm());
-        List<String> clientNames = new ArrayList<>();
-        for (Client client : clients.get()) {
-            clientNames.add(client.getClientFirstName() + " " + client.getClientLastName() + " (" + client.getClientId() + ")");
-        }
-        ObservableList<String> clientNamesObservableList = FXCollections.observableArrayList(clientNames);
-        comboBox.setItems(clientNamesObservableList);
+        Task<List<String>> getComboBoxClientListTask = new Task<List<String>>() {
+            @Override
+            protected List<String> call() throws Exception {
+                ArrayList<String> clientNames = new ArrayList<>();
+                for (Client client : clients.get()) {
+                    clientNames.add(client.getClientFirstName() + " " + client.getClientLastName() + " (" + client.getClientId() + ")");
+                }
+                return clientNames;
+            }
+        };
+        javafx.collections.ObservableList<String> clientNamesObservableList = FXCollections.observableArrayList();
+        getComboBoxClientListTask.setOnSucceeded(e -> {
+            clientNamesObservableList.setAll(getComboBoxClientListTask.getValue());
+            comboBox.setItems(clientNamesObservableList);
+        });
+        new Thread(getComboBoxClientListTask).start();
         comboBox.setOnAction(e -> {
             int comboBoxSelectedClientId = Integer.parseInt(comboBox.getSelectionModel().getSelectedItem().split("\\(")[1].split("\\)")[0]);
             investments.set(InvestmentService.getAllInvestmentsFromDatabaseForClient(comboBoxSelectedClientId));
@@ -202,23 +215,63 @@ public class InvestmentAnalysisPane {
                 alert.showAndWait();
             } else {
                 if (cumulativeRadioButton.isSelected()) {
-                    XYChart.Series<String, Number> series = new XYChart.Series<>();
-                    series.setName("Cumulative");
-                    for (Investment investment : investments.get()) {
-                        series.getData().add(new XYChart.Data<>(investment.getInvestmentDate().format(formatter), investment.getInvestmentAmount()));
-                    }
-                    investmentsGraphSeries.setAll(series);
-                } else {
-                    XYChart.Series<String, Number> series = new XYChart.Series<>();
-                    series.setName("Date");
-                    for (Investment investment : investments.get()) {
-                        LocalDate fromDate = fromDatePicker.getValue();
-                        LocalDate toDate = toDatePicker.getValue();
-                        if (investment.getInvestmentDate().isAfter(fromDate) && investment.getInvestmentDate().isBefore(toDate)){
-                            series.getData().add(new XYChart.Data<>(investment.getInvestmentDate().format(formatter), investment.getInvestmentAmount()));
+                    Task<XYChart.Series<String, Number>> getCumulativeInvestmentsGraphSeriesTask = new Task<XYChart.Series<String, Number>>() {
+                        @Override
+                        protected XYChart.Series<String, Number> call() throws Exception {
+                            XYChart.Series<String, Number> series = new XYChart.Series<>();
+                            series.setName("Cumulative");
+                            ArrayList<Investment> retrievedInvestments = investments.get();
+                            Comparator<Investment> investmentComparatorByDate = (i1, i2) -> {
+                                if (i1.getInvestmentDate().isBefore(i2.getInvestmentDate())) {
+                                    return -1;
+                                } else if (i1.getInvestmentDate().isAfter(i2.getInvestmentDate())) {
+                                    return 1;
+                                } else {
+                                    return 0;
+                                }
+                            };
+                            retrievedInvestments.sort(investmentComparatorByDate);
+                            for (Investment investment : retrievedInvestments) {
+                                series.getData().add(new XYChart.Data<>(investment.getInvestmentDate().format(formatter), investment.getInvestmentAmount()));
+                            }
+                            return series;
                         }
-                    }
-                    investmentsGraphSeries.setAll(series);
+                    };
+                    getCumulativeInvestmentsGraphSeriesTask.setOnSucceeded(e1 -> {
+                        investmentsGraphSeries.setAll(getCumulativeInvestmentsGraphSeriesTask.getValue());
+                    });
+                    new Thread(getCumulativeInvestmentsGraphSeriesTask).start();
+                } else {
+                    Task<XYChart.Series<String, Number>> getDatewiseInvestmentsGraphSeriesTask = new Task<XYChart.Series<String, Number>>() {
+                        @Override
+                        protected XYChart.Series<String, Number> call() throws Exception {
+                            XYChart.Series<String, Number> series = new XYChart.Series<>();
+                            series.setName("Date");
+                            ArrayList<Investment> retrievedInvestments = investments.get();
+                            Comparator<Investment> investmentComparatorByDate = (i1, i2) -> {
+                                if (i1.getInvestmentDate().isBefore(i2.getInvestmentDate())) {
+                                    return -1;
+                                } else if (i1.getInvestmentDate().isAfter(i2.getInvestmentDate())) {
+                                    return 1;
+                                } else {
+                                    return 0;
+                                }
+                            };
+                            retrievedInvestments.sort(investmentComparatorByDate);
+                            for (Investment investment : retrievedInvestments) {
+                                LocalDate fromDate = fromDatePicker.getValue();
+                                LocalDate toDate = toDatePicker.getValue();
+                                if (investment.getInvestmentDate().isAfter(fromDate) && investment.getInvestmentDate().isBefore(toDate)){
+                                    series.getData().add(new XYChart.Data<>(investment.getInvestmentDate().format(formatter), investment.getInvestmentAmount()));
+                                }
+                            }
+                            return series;
+                        }
+                    };
+                    getDatewiseInvestmentsGraphSeriesTask.setOnSucceeded(e1 -> {
+                        investmentsGraphSeries.setAll(getDatewiseInvestmentsGraphSeriesTask.getValue());
+                    });
+                    new Thread(getDatewiseInvestmentsGraphSeriesTask).start();
                 }
             }
         });

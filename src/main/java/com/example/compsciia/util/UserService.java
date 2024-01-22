@@ -5,11 +5,8 @@ import javafx.scene.control.Alert;
 //import javafx.scene.image.Image;
 
 import javax.imageio.ImageIO;
-import javax.imageio.stream.ImageInputStream;
-import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
-import java.awt.image.RenderedImage;
 import java.io.*;
 import java.net.URISyntaxException;
 import java.sql.Connection;
@@ -173,7 +170,7 @@ public class UserService {
         }
     }
 
-    public static boolean isUsernameTaken(String username){
+    public static boolean checkIfUsernameIsTaken(String username){
         String query = "SELECT * FROM app_users WHERE username = ?";
 
         try (Connection conn = database.connect(); PreparedStatement stmt = Objects.requireNonNull(conn).prepareStatement(query)) {
