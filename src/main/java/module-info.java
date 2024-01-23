@@ -11,6 +11,7 @@ module com.example.compsciia {
     requires java.desktop;
     requires javafx.swing;
     requires xirr;
+    requires java.mail;
 
     opens com.example.compsciia to javafx.fxml;
     exports com.example.compsciia;

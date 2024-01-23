@@ -1,12 +1,12 @@
 package com.example.compsciia;
 
+import com.example.compsciia.util.EmailService;
 import javafx.application.Application;
 // import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import com.example.compsciia.views.loginPage;
 import com.example.compsciia.views.signUpPage;
-import com.example.compsciia.views.Dashboard;
 
 import java.io.IOException;
 

@@ -1,8 +1,10 @@
 package com.example.compsciia.views;
 import com.example.compsciia.compsciia;
 import com.example.compsciia.util.UserService;
+import com.example.compsciia.util.EmailService;
 import com.example.compsciia.util.Validators;
 import javafx.collections.FXCollections;
+import javafx.concurrent.Task;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
@@ -167,12 +169,60 @@ public class signUpPage {
             Validators.showInvalidUsernamePopup();
         }
         if (Validators.isValidEmail(email) && Validators.isValidPassword(password) && Validators.isValidUsername(username)) {
-            UserService.writeUserToDatabase(username, email, password);
-            Alert success = new Alert(Alert.AlertType.INFORMATION);
-            success.setTitle("Success");
-            success.setHeaderText(null);
-            success.setContentText("Your account has been created successfully. Please proceed to the Login page to log in.");
-            success.showAndWait();
+            // generate a confirmation code and send it to the user's email, ask the user to enter the code in a  dialog box
+            // if the code is correct, then write the user to the database
+            // if the code is incorrect, then show an error message
+            String code = UserService.generateConfirmationCode();
+            Task<Void> task = new Task<Void>() {
+                @Override
+                protected Void call() throws Exception {
+                    EmailService.sendEmail(email, "Confirmation Code", "Your confirmation code is " + code);
+                    return null;
+                }
+            };
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Sending Email");
+            alert.setHeaderText(null);
+            alert.setContentText("Sending confirmation code to your email address...");
+            task.setOnRunning(e -> {
+                alert.show();
+            });
+            task.setOnSucceeded(e -> {
+                alert.hide();
+            });
+            new Thread(task).start();
+            System.out.println(code);
+            Dialog<String> dialog = new Dialog<>();
+            dialog.setTitle("Confirmation Code");
+            dialog.setHeaderText("Please enter the confirmation code sent to your email address.");
+            dialog.setResizable(true);
+            TextField confirmationCode = new TextField();
+            confirmationCode.setPromptText("Confirmation Code");
+            ButtonType confirmButtonType = new ButtonType("Confirm", ButtonBar.ButtonData.OK_DONE);
+            dialog.getDialogPane().getButtonTypes().addAll(confirmButtonType, ButtonType.CANCEL);
+            dialog.getDialogPane().setContent(confirmationCode);
+            dialog.setResultConverter(dialogButton -> {
+                if (dialogButton == confirmButtonType) {
+                    return confirmationCode.getText();
+                }
+                return null;
+            });
+            String confirmationCodeInput = dialog.showAndWait().orElse("");
+            if (!confirmationCodeInput.equals(code)) {
+                Alert error = new Alert(Alert.AlertType.ERROR);
+                error.setTitle("Error");
+                error.setHeaderText(null);
+                error.setContentText("The confirmation code you entered is incorrect.");
+                error.showAndWait();
+                return;
+            } else {
+                UserService.writeUserToDatabase(username, email, password);
+                Alert success = new Alert(Alert.AlertType.INFORMATION);
+                success.setTitle("Success");
+                success.setHeaderText(null);
+                success.setContentText("Your account has been created successfully. Please proceed to the Login page to log in.");
+                success.showAndWait();
+            }
         }
     }
 }

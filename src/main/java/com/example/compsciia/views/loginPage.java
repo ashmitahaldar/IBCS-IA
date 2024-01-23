@@ -5,7 +5,6 @@ import com.example.compsciia.util.UserService;
 import com.example.compsciia.util.Validators;
 
 import javafx.application.Platform;
-import javafx.collections.FXCollections;
 import javafx.concurrent.Task;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
@@ -18,8 +17,7 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.util.Objects;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
+
 public class loginPage {
     public Scene createScene(Stage stage, signUpPage signUpPage) {
         BorderPane root = new BorderPane();
@@ -134,8 +132,33 @@ public class loginPage {
         signUpButton.getStyleClass().add("button-design");
         signUpButton.setOnAction(e -> stage.setScene(signUpPage.createScene(stage, new loginPage())));
 
+        Hyperlink forgotPasswordLink = new Hyperlink("Forgot Password?");
+        forgotPasswordLink.setLayoutX(300.0);
+        forgotPasswordLink.setLayoutY(450.0);
+        forgotPasswordLink.setPrefHeight(30.0);
+        forgotPasswordLink.setPrefWidth(120.0);
+        forgotPasswordLink.setOnAction(e -> {
+                Dialog<String> dialog = new Dialog<>();
+                dialog.setTitle("Forgot Password");
+                dialog.setHeaderText("Enter your email address to receive your password");
+                dialog.setResizable(true);
+                TextField emailTextField1 = new TextField();
+                emailTextField1.setPromptText("Email Address");
+                ButtonType resetButtonType = new ButtonType("Send Email", ButtonBar.ButtonData.OK_DONE);
+                dialog.getDialogPane().getButtonTypes().addAll(resetButtonType, ButtonType.CANCEL);
+                dialog.getDialogPane().setContent(emailTextField1);
+                Platform.runLater(emailTextField1::requestFocus);
+                dialog.setResultConverter(dialogButton -> {
+                    if (dialogButton == resetButtonType) {
+                        forgotPassword(emailTextField1.getText());
+                    }
+                    return null;
+                });
+                dialog.showAndWait();
+        });
+
         centerAnchorPane.getChildren().addAll(loginLabel, emailTextField, passwordField,
-                 emailTextLabel, passwordLabel, loginButton, signUpButton);
+                 emailTextLabel, passwordLabel, loginButton, signUpButton, forgotPasswordLink);
 
         // Set components in the BorderPane
         root.setLeft(leftAnchorPane);
@@ -188,5 +211,19 @@ public class loginPage {
         alert.setContentText("Welcome " + user.getUsername() + "! You will now be logged in.");
 
         alert.showAndWait();
+    }
+
+    private void forgotPassword(String email) {
+        if (!Validators.isValidEmail(email)) {
+            Validators.showInvalidEmailPopup();
+        } else if (!UserService.checkIfUserExists(email)) {
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Forgot Password");
+            alert.setHeaderText(null);
+            alert.setContentText("The user does not exist.");
+            alert.showAndWait();
+        } else if (Validators.isValidEmail(email) && UserService.checkIfUserExists(email)) {
+            UserService.forgotPassword(email);
+        }
     }
 }

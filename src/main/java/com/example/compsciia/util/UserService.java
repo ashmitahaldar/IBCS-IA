@@ -1,7 +1,10 @@
 package com.example.compsciia.util;
 import com.example.compsciia.compsciia;
 import com.example.compsciia.models.User;
-import javafx.scene.control.Alert;
+import javafx.concurrent.Task;
+import javafx.scene.control.*;
+import javafx.scene.control.Dialog;
+import javafx.scene.control.TextField;
 //import javafx.scene.image.Image;
 
 import javax.imageio.ImageIO;
@@ -16,6 +19,7 @@ import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Objects;
+import java.security.SecureRandom;
 
 public class UserService {
     public static void writeUserToDatabase(String username, String email, String password){
@@ -209,5 +213,166 @@ public class UserService {
         g.drawImage(image, 0, 0, null);
         g.dispose();
         return newImage;
+    }
+
+    public static Boolean checkIfUserExists(String email){
+        String query = "SELECT * FROM app_users WHERE email = ?";
+
+        try (Connection conn = database.connect(); PreparedStatement stmt = Objects.requireNonNull(conn).prepareStatement(query)) {
+            stmt.setString(1, email);
+            ResultSet resultset = stmt.executeQuery();
+            while (resultset.next()) {
+                System.out.println("Email: " + email);
+                System.out.println("User exists");
+                return true;
+            }
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+        return false;
+    }
+
+    public static void forgotPassword(String email){
+        String query = "SELECT * FROM app_users WHERE email = ?";
+
+        try (Connection conn = database.connect(); PreparedStatement stmt = Objects.requireNonNull(conn).prepareStatement(query)) {
+            stmt.setString(1, email);
+            ResultSet resultset = stmt.executeQuery();
+            while (resultset.next()) {
+                System.out.println("Email: " + email);
+                System.out.println("User exists");
+                String password = resultset.getString("password");
+                String username = resultset.getString("username");
+                String firstName = resultset.getString("first_name");
+                String lastName = resultset.getString("last_name");
+                String phoneNumber = resultset.getString("phone_number");
+                LocalDate dateOfBirth = resultset.getObject("date_of_birth", LocalDate.class);
+//                String message = "Hi " + firstName + " " + lastName + ",\n\nYour password is: " + password + "\n\nKind regards,\nClientify";
+//                EmailService.sendEmail(email, "Clientify - Forgot Password", message);
+//                System.out.println(message);
+                String code = generateConfirmationCode();
+                String message = "Hi " + firstName + " " + lastName + ",\n\nYour confirmation code is: " + code + "\n\nKind regards,\nClientify";
+//                EmailService.sendEmail(email, "Clientify - Forgot Password", message);
+                Task<Void> sendForgotPasswordConfirmationCodeTask = new Task<Void>() {
+                    @Override
+                    protected Void call() throws Exception {
+                        EmailService.sendEmail(email, "Clientify - Forgot Password", message);
+                        return null;
+                    }
+                };
+                Alert forgotPasswordEmailRunningAlert = new Alert(Alert.AlertType.INFORMATION);
+                forgotPasswordEmailRunningAlert.setTitle("Sending Email");
+                forgotPasswordEmailRunningAlert.setHeaderText(null);
+                forgotPasswordEmailRunningAlert.setContentText("Sending email...");
+                sendForgotPasswordConfirmationCodeTask.setOnRunning((e) -> {
+                    forgotPasswordEmailRunningAlert.show();
+                });
+                sendForgotPasswordConfirmationCodeTask.setOnSucceeded(e -> {
+                    forgotPasswordEmailRunningAlert.hide();
+                });
+                new Thread(sendForgotPasswordConfirmationCodeTask).start();
+
+                System.out.println("Email sent");
+
+                Dialog<String> dialog = new Dialog<>();
+                dialog.setTitle("Confirmation Code");
+                dialog.setHeaderText("Please enter the confirmation code sent to your email address.");
+                dialog.setResizable(true);
+                javafx.scene.control.TextField confirmationCode = new TextField();
+                confirmationCode.setPromptText("Confirmation Code");
+                ButtonType confirmButtonType = new ButtonType("Confirm", ButtonBar.ButtonData.OK_DONE);
+                dialog.getDialogPane().getButtonTypes().addAll(confirmButtonType, ButtonType.CANCEL);
+                dialog.getDialogPane().setContent(confirmationCode);
+                dialog.setResultConverter(dialogButton -> {
+                    if (dialogButton == confirmButtonType) {
+                        return confirmationCode.getText();
+                    }
+                    return null;
+                });
+                dialog.showAndWait();
+                String confirmationCodeInput = dialog.showAndWait().orElse("");
+                if (!confirmationCodeInput.equals(code)) {
+                    Alert error = new Alert(Alert.AlertType.ERROR);
+                    error.setTitle("Error");
+                    error.setHeaderText(null);
+                    error.setContentText("The confirmation code you entered is incorrect.");
+                    error.showAndWait();
+                    return;
+                } else {
+                    Dialog<String> dialog2 = new Dialog<>();
+                    dialog2.setTitle("New Password");
+                    dialog2.setHeaderText("Please enter your new password.");
+                    dialog2.setResizable(true);
+                    javafx.scene.control.TextField newPassword = new TextField();
+                    newPassword.setPromptText("New Password");
+                    ButtonType confirmButtonType2 = new ButtonType("Confirm", ButtonBar.ButtonData.OK_DONE);
+                    dialog2.getDialogPane().getButtonTypes().addAll(confirmButtonType2, ButtonType.CANCEL);
+                    dialog2.getDialogPane().setContent(newPassword);
+                    dialog2.setResultConverter(dialogButton -> {
+                        if (dialogButton == confirmButtonType2) {
+                            return newPassword.getText();
+                        }
+                        return null;
+                    });
+                    dialog2.showAndWait();
+                    String newPasswordInput = dialog2.showAndWait().orElse("");
+                    if (newPasswordInput.equals("")) {
+                        Alert error = new Alert(Alert.AlertType.ERROR);
+                        error.setTitle("Error");
+                        error.setHeaderText(null);
+                        error.setContentText("You must enter a new password.");
+                        error.showAndWait();
+                        return;
+                    } else if (!Validators.isValidPassword(newPasswordInput)) {
+                        Alert error = new Alert(Alert.AlertType.ERROR);
+                        error.setTitle("Error");
+                        error.setHeaderText(null);
+                        error.setContentText("Your password must be at least 8 characters long and contain at least one uppercase letter, one lowercase letter, one number and one special character.");
+                        error.showAndWait();
+                        return;
+                    } else if (newPasswordInput.equals(password)) {
+                        Alert error = new Alert(Alert.AlertType.ERROR);
+                        error.setTitle("Error");
+                        error.setHeaderText(null);
+                        error.setContentText("Your new password cannot be the same as your old password.");
+                        error.showAndWait();
+                        return;
+                    } else {
+                        String query2 = "UPDATE app_users SET password = ? WHERE email = ?";
+                        try (Connection conn2 = database.connect(); PreparedStatement stmt2 = Objects.requireNonNull(conn2).prepareStatement(query2)) {
+                            stmt2.setString(1, newPasswordInput);
+                            stmt2.setString(2, email);
+                            stmt2.executeUpdate();
+                            System.out.println("Email: " + email);
+                            System.out.println("Password: " + newPasswordInput);
+                            System.out.println("User updated in database");
+                            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                            alert.setTitle("Password Updated");
+                            alert.setHeaderText(null);
+                            alert.setContentText("Your password has been updated successfully. Please login again");
+                            alert.showAndWait();
+                        } catch (SQLException e) {
+                            System.out.println(e.getMessage());
+                        }
+                    }
+                }
+            }
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
+    public static String generateConfirmationCode(){
+        final String ALPHABET = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+        final SecureRandom secureRandom = new SecureRandom();
+        StringBuilder codeBuilder = new StringBuilder();
+
+        for (int i = 0; i < 4; i++) {
+            int randomIndex = secureRandom.nextInt(ALPHABET.length());
+            char randomChar = ALPHABET.charAt(randomIndex);
+            codeBuilder.append(randomChar);
+        }
+
+        return codeBuilder.toString();
     }
 }
