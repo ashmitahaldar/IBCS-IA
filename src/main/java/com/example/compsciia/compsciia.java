@@ -8,7 +8,10 @@ import javafx.stage.Stage;
 import com.example.compsciia.views.loginPage;
 import com.example.compsciia.views.signUpPage;
 
+import java.io.File;
 import java.io.IOException;
+
+import static com.example.compsciia.util.PDFGenerator.generateTestPDF;
 
 public class compsciia extends Application {
     @Override

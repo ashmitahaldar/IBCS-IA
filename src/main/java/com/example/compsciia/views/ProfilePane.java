@@ -2,6 +2,7 @@ package com.example.compsciia.views;
 import com.example.compsciia.compsciia;
 
 import com.example.compsciia.models.User;
+import com.example.compsciia.util.ClientService;
 import com.example.compsciia.util.UserService;
 import com.example.compsciia.util.Validators;
 import javafx.concurrent.Task;
@@ -68,7 +69,7 @@ public class ProfilePane {
         Label labelPassword = new Label("Password");
         Label labelPhoneNumber = new Label("Phone Number");
         Label labelDateOfBirth = new Label("Date of Birth");
-        Label labelClientsManaged = new Label("Clients Managed: " + "user.getNoOfClients()");
+        Label labelClientsManaged = new Label("Clients Managed: " + ClientService.getNumberOfClientsFromDatabaseForUser(userId));
 
         // TextFields
         TextField textFieldUsername = new TextField();
@@ -87,7 +88,7 @@ public class ProfilePane {
         setLabelProperties(labelPassword, 30.0, 220.0, 40.0, 150.0, 20.0);
         setLabelProperties(labelPhoneNumber, 30.0, 285.0, 40.0, 150.0, 20.0);
         setLabelProperties(labelDateOfBirth, 30.0, 330.0, 40.0, 150.0, 20.0);
-        setLabelProperties(labelClientsManaged, 450.0, 330.0, 40.0, 150.0, 20.0);
+        setLabelProperties(labelClientsManaged, 450.0, 330.0, 40.0, 200.0, 20.0);
 
         // Setting properties for TextFields
         setTextFieldProperties(textFieldUsername, user.get().getUsername(), 180.0, 40.0, 40.0, 250.0);

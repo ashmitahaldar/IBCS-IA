@@ -277,7 +277,8 @@ public class InvestmentAnalysisPane {
         });
 
         Button calculateXirrButton = new Button("Calculate XIRR");
-        calculateXirrButton.setLayoutX(480.0);
+//        calculateXirrButton.setLayoutX(480.0);
+        calculateXirrButton.setLayoutX(550.0);
         calculateXirrButton.setLayoutY(360.0);
         calculateXirrButton.setMnemonicParsing(false);
         calculateXirrButton.setPrefHeight(40.0);
@@ -326,18 +327,37 @@ public class InvestmentAnalysisPane {
             }
         });
 
-        Button generateReportButton = new Button("Generate Report");
-        generateReportButton.setLayoutX(610.0);
-        generateReportButton.setLayoutY(360.0);
-        generateReportButton.setMnemonicParsing(false);
-        generateReportButton.setPrefHeight(40.0);
-        generateReportButton.setPrefWidth(120.0);
-        generateReportButton.getStyleClass().add("button-design");
+//        Button generateReportButton = new Button("Generate Report");
+//        generateReportButton.setLayoutX(610.0);
+//        generateReportButton.setLayoutY(360.0);
+//        generateReportButton.setMnemonicParsing(false);
+//        generateReportButton.setPrefHeight(40.0);
+//        generateReportButton.setPrefWidth(120.0);
+//        generateReportButton.getStyleClass().add("button-design");
+//        generateReportButton.disableProperty().bind(comboBox.getSelectionModel().selectedItemProperty().isNull());
+
+//        generateReportButton.setOnAction(e -> {
+//            if (comboBox.getSelectionModel().isEmpty()){
+//                Alert alert = new Alert(Alert.AlertType.ERROR);
+//                alert.setTitle("No Client Selected");
+//                alert.setHeaderText(null);
+//                alert.setContentText("Please select a client to generate the report.");
+//                alert.showAndWait();
+//            } else if (dateRadioButton.isSelected() && ((fromDatePicker.getValue() == null) || (toDatePicker.getValue() == null))){
+//                Alert alert = new Alert(Alert.AlertType.ERROR);
+//                alert.setTitle("Invalid Date Range");
+//                alert.setHeaderText(null);
+//                alert.setContentText("Please select a valid date range to generate the report.");
+//                alert.showAndWait();
+//            } else {
+//                // TODO: Generate Report
+//            }
+//        });
 
         centerAnchorPane.getChildren().addAll(lineChart, chooseClientLabel, comboBox,
                 cumulativeRadioButton, dateRadioButton, displayByLabel,
                 fromLabel, fromDatePicker, toLabel, toDatePicker, loadGraphButton,
-                xirrLabel, xirrTextField, calculateXirrButton, generateReportButton);
+                xirrLabel, xirrTextField, calculateXirrButton); //generateReportButton
 
         // Adding Top and Center AnchorPanes to BorderPane
         borderPane.setTop(topAnchorPane);

@@ -5,19 +5,15 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="2651dba4-d7fa-4278-b443-2b3640fa4299" name="Changes" comment="Implemented Email sending; Forgot Password functionality and Sign Up confirmation">
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/compsciia/util/Config.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/compsciia/util/EmailService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/META-INF/javamail.default.address.map" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/com/example/compsciia/config.properties" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/itext.pdf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/itextpdf-5.4.0.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/compsciia/util/PDFGenerator.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/example/compsciia/compsciia.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/compsciia/compsciia.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/compsciia/util/UserService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/compsciia/util/UserService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/example/compsciia/views/ClientRecordsPane.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/compsciia/views/ClientRecordsPane.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/compsciia/views/loginPage.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/compsciia/views/loginPage.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/compsciia/views/signUpPage.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/compsciia/views/signUpPage.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/compsciia/views/InvestmentAnalysisPane.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/compsciia/views/InvestmentAnalysisPane.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/compsciia/views/ProfilePane.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/compsciia/views/ProfilePane.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/module-info.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/module-info.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/com/example/compsciia/login.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/com/example/compsciia/login.fxml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -47,13 +43,16 @@
   &quot;associatedIndex&quot;: 3
 }</component>
   <component name="ProjectId" id="2S6V5DAOf8EG9esyKmGVXOB0vnV" />
-  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
   <component name="PropertiesComponent">{
   &quot;keyToString&quot;: {
+    &quot;ASKED_ADD_EXTERNAL_FILES&quot;: &quot;true&quot;,
     &quot;Application.compsciia.executor&quot;: &quot;Run&quot;,
     &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
@@ -62,6 +61,7 @@
     &quot;extract.method.default.visibility&quot;: &quot;private&quot;,
     &quot;git-widget-placeholder&quot;: &quot;main&quot;,
     &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;/Users/ashmitahaldar/IdeaProjects/compsciia&quot;,
     &quot;list.type.of.created.stylesheet&quot;: &quot;CSS&quot;,
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
     &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
@@ -81,6 +81,9 @@
   }
 }</component>
   <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$" />
+    </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$" />
       <recent name="$PROJECT_DIR$/src/main/resources/com/example/compsciia" />
@@ -156,7 +159,10 @@
       <workItem from="1705892933656" duration="15607000" />
       <workItem from="1705983468056" duration="4458000" />
       <workItem from="1705988117905" duration="488000" />
-      <workItem from="1705988629229" duration="6939000" />
+      <workItem from="1705988629229" duration="7904000" />
+      <workItem from="1706085713078" duration="3392000" />
+      <workItem from="1706106741106" duration="45000" />
+      <workItem from="1706106811651" duration="3766000" />
     </task>
     <task id="LOCAL-00001" summary="built login/signup system and constructed navbar">
       <option name="closed" value="true" />
@@ -246,7 +252,15 @@
       <option name="project" value="LOCAL" />
       <updated>1705907602796</updated>
     </task>
-    <option name="localTasksCounter" value="12" />
+    <task id="LOCAL-00012" summary="Implemented Email sending; Forgot Password functionality and Sign Up confirmation">
+      <option name="closed" value="true" />
+      <created>1706002656278</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1706002656278</updated>
+    </task>
+    <option name="localTasksCounter" value="13" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -276,6 +290,7 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
+    <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
     <MESSAGE value="built login/signup system and constructed navbar" />
     <MESSAGE value="built user profile editing page&#10;only clients managing counter, account data clearing, and account deletion left on that page" />
     <MESSAGE value="minor edits, created Validators class" />

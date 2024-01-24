@@ -6,6 +6,7 @@ import com.example.compsciia.models.Investment;
 import com.example.compsciia.models.User;
 import com.example.compsciia.util.ClientService;
 import com.example.compsciia.util.InvestmentService;
+import com.example.compsciia.util.PDFGenerator;
 import com.example.compsciia.util.Validators;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -14,6 +15,7 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
+import javafx.stage.FileChooser;
 import javafx.util.StringConverter;
 
 import java.time.LocalDate;
@@ -124,6 +126,7 @@ public class ClientRecordsPane {
         Button clientUpdateButton = createButton("Update", 120.0, 390.0, 100.0);
         Button clientClearButton = createButton("Clear", 225.0, 390.0, 120.0);
         Button clientPrintButton = createButton("Print Client Data", 370.0, 390.0, 150.0);
+        clientPrintButton.disableProperty().bind(clientsTable.getSelectionModel().selectedItemProperty().isNull());
         Button clientPrintAllButton = createButton("Print All Client Data", 535.0, 390.0, 150.0);
 
         clientDeleteButton.setOnAction(e -> {
@@ -156,6 +159,33 @@ public class ClientRecordsPane {
             fieldClientDateOfBirth.setValue(null);
             textFieldClientRegisteredID.clear();
             textFieldClientAddress.clear();
+        });
+
+        clientPrintButton.setOnAction(e -> {
+            if (clientsTable.getSelectionModel().getSelectedItem() != null) {
+                Client selectedClient = (Client) clientsTable.getSelectionModel().getSelectedItem();
+                FileChooser fileChooser = new FileChooser();
+                fileChooser.setTitle("Save PDF");
+                fileChooser.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("PDF Files", "*.pdf"));
+                fileChooser.setInitialFileName("Client Record - " + selectedClient.getClientFirstName() + " " + selectedClient.getClientLastName() + ".pdf");
+                String filePath = fileChooser.showSaveDialog(clientPrintButton.getScene().getWindow()).getAbsolutePath();
+                PDFGenerator.printSingleClientData(selectedClient, filePath);
+            } else {
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Error");
+                alert.setHeaderText(null);
+                alert.setContentText("Please select a client.");
+                alert.showAndWait();
+            }
+        });
+
+        clientPrintAllButton.setOnAction(e ->{
+            FileChooser fileChooser = new FileChooser();
+            fileChooser.setTitle("Save PDF");
+            fileChooser.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("PDF Files", "*.pdf"));
+            fileChooser.setInitialFileName("Client Records.pdf");
+            String filePath = fileChooser.showSaveDialog(clientPrintAllButton.getScene().getWindow()).getAbsolutePath();
+            PDFGenerator.printAllClientData(clients.get(), filePath);
         });
 
         // Adding children to AnchorPane
@@ -256,8 +286,6 @@ public class ClientRecordsPane {
         TextField textFieldInvestmentDescription = createTextField(155.0, 230.0, 100.0);
 
 //        // Investments table
-//        int comboBoxSelectedClientId = Integer.parseInt(comboBoxChooseClient.getSelectionModel().getSelectedItem().split("\\(")[1].split("\\)")[0]);
-//        AtomicReference<ArrayList<Investment>> investments = new AtomicReference<>(InvestmentService.getAllInvestmentsFromDatabaseForClient(comboBoxSelectedClientId));
         AtomicReference<ArrayList<Investment>> investments = new AtomicReference<>();
         TableView investmentsTable = createInvestmentTableView();
         investmentsTable.setLayoutX(360);
@@ -321,6 +349,16 @@ public class ClientRecordsPane {
             int comboBoxSelectedClientId = Integer.parseInt(comboBoxChooseClient.getSelectionModel().getSelectedItem().split("\\(")[1].split("\\)")[0]);
             investments.set(InvestmentService.getAllInvestmentsFromDatabaseForClient(comboBoxSelectedClientId));
             setInvestmentTableViewItems(investmentsTable, investments.get());
+        });
+
+        investmentPrintAllButton.setOnAction(e -> {
+            Client selectedClient = clients.get().get(comboBoxChooseClient.getSelectionModel().getSelectedIndex());
+            FileChooser fileChooser = new FileChooser();
+            fileChooser.setTitle("Save PDF");
+            fileChooser.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("PDF Files", "*.pdf"));
+            fileChooser.setInitialFileName("Investment Records - " + selectedClient.getClientFirstName() + " " + selectedClient.getClientLastName() + ".pdf");
+            String filePath = fileChooser.showSaveDialog(investmentPrintAllButton.getScene().getWindow()).getAbsolutePath();
+            PDFGenerator.printAllInvestmentData(investments.get(), filePath);
         });
 
         // Adding children to AnchorPane
