@@ -117,6 +117,7 @@ public class ClientService {
     }
 
 public static void deleteClientFromDatabase(int client_id){
+        InvestmentService.clearAllInvestmentsFromDatabaseForClient(client_id);
         String query = "DELETE FROM clients WHERE client_id = ?";
 
         try (Connection conn = database.connect(); PreparedStatement stmt = Objects.requireNonNull(conn).prepareStatement(query)) {

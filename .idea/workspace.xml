@@ -4,16 +4,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="2651dba4-d7fa-4278-b443-2b3640fa4299" name="Changes" comment="Implemented Email sending; Forgot Password functionality and Sign Up confirmation">
-      <change afterPath="$PROJECT_DIR$/itext.pdf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/itextpdf-5.4.0.jar" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/compsciia/util/PDFGenerator.java" afterDir="false" />
+    <list default="true" id="2651dba4-d7fa-4278-b443-2b3640fa4299" name="Changes" comment="Implemented PDF generation!">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/compsciia/compsciia.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/compsciia/compsciia.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/compsciia/views/ClientRecordsPane.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/compsciia/views/ClientRecordsPane.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/compsciia/views/InvestmentAnalysisPane.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/compsciia/views/InvestmentAnalysisPane.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/compsciia/views/ProfilePane.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/compsciia/views/ProfilePane.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/module-info.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/module-info.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/compsciia/util/ClientService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/compsciia/util/ClientService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/compsciia/views/loginPage.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/compsciia/views/loginPage.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/compsciia/views/signUpPage.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/compsciia/views/signUpPage.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -162,7 +157,10 @@
       <workItem from="1705988629229" duration="7904000" />
       <workItem from="1706085713078" duration="3392000" />
       <workItem from="1706106741106" duration="45000" />
-      <workItem from="1706106811651" duration="3766000" />
+      <workItem from="1706106811651" duration="3809000" />
+      <workItem from="1706596319631" duration="694000" />
+      <workItem from="1706597060453" duration="14000" />
+      <workItem from="1707197449687" duration="609000" />
     </task>
     <task id="LOCAL-00001" summary="built login/signup system and constructed navbar">
       <option name="closed" value="true" />
@@ -260,7 +258,15 @@
       <option name="project" value="LOCAL" />
       <updated>1706002656278</updated>
     </task>
-    <option name="localTasksCounter" value="13" />
+    <task id="LOCAL-00013" summary="Implemented PDF generation!">
+      <option name="closed" value="true" />
+      <created>1706110615204</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1706110615204</updated>
+    </task>
+    <option name="localTasksCounter" value="14" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -303,7 +309,8 @@
     <MESSAGE value="Implemented threading" />
     <MESSAGE value="Implemented &quot;Delete User Account&quot; and &quot;Clear Account Data&quot; functionality on Profile page" />
     <MESSAGE value="Implemented Email sending; Forgot Password functionality and Sign Up confirmation" />
-    <option name="LAST_COMMIT_MESSAGE" value="Implemented Email sending; Forgot Password functionality and Sign Up confirmation" />
+    <MESSAGE value="Implemented PDF generation!" />
+    <option name="LAST_COMMIT_MESSAGE" value="Implemented PDF generation!" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

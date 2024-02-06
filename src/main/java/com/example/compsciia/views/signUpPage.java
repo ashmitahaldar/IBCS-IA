@@ -26,23 +26,23 @@ public class signUpPage {
         rightAnchorPane.setPrefSize(330.0, 540.0);
         rightAnchorPane.getStyleClass().add("login-bg");
 
-        Label welcomeText = new Label("App");
-        welcomeText.setLayoutX(126.0);
+        Label welcomeText = new Label();
+        welcomeText.setLayoutX(100.0);
         welcomeText.setLayoutY(289.0);
         welcomeText.setPrefHeight(50.0);
-        welcomeText.setPrefWidth(74.0);
-        welcomeText.setText("App");
+        welcomeText.setPrefWidth(200);
+        welcomeText.setText("Clientify");
         welcomeText.setTextAlignment(javafx.scene.text.TextAlignment.RIGHT);
         welcomeText.setTextFill(javafx.scene.paint.Color.WHITE);
         welcomeText.setWrapText(true);
         welcomeText.setFont(new Font(40.0));
 
-        Label descriptionText = new Label("Investment portfolio client management system.");
+        Label descriptionText = new Label();
         descriptionText.setLayoutX(58.0);
         descriptionText.setLayoutY(346.0);
-        descriptionText.setPrefHeight(56.0);
-        descriptionText.setPrefWidth(213.0);
-        descriptionText.setText("Investment portfolio client management system.");
+        descriptionText.setPrefHeight(100);
+        descriptionText.setPrefWidth(220.0);
+        descriptionText.setText("Investment portfolio client management and XIRR report system.");
         descriptionText.setTextAlignment(javafx.scene.text.TextAlignment.CENTER);
         descriptionText.setTextFill(javafx.scene.paint.Color.WHITE);
         descriptionText.setTextOverrun(javafx.scene.control.OverrunStyle.CENTER_ELLIPSIS);
