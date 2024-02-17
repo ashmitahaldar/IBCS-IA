@@ -302,7 +302,6 @@ public class ClientRecordsPane {
             if (newSelectedInvestment != null) {
                 System.out.println("Selected Investment: " + newSelectedInvestment);
                 int selectedInvestmentClientId = ((Investment)newSelectedInvestment).getClientId();
-//              comboBoxChooseClient.getSelectionModel().select(clients.get().indexOf(ClientService.getClientFromDatabase(selectedInvestmentClientId)));
                 labelInvestmentID.setText("ID: " + ((Investment)newSelectedInvestment).getInvestmentId());
                 textFieldInvestmentName.setText(((Investment)newSelectedInvestment).getInvestmentName());
                 textFieldInvestmentAmount.setText(Double.toString(((Investment)newSelectedInvestment).getInvestmentAmount()));
