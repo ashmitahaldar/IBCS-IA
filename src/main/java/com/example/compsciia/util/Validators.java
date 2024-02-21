@@ -20,7 +20,6 @@ public class Validators {
         alert.showAndWait();
     }
     public static boolean isValidEmail(String email) {
-        // Regular expression for a simple email validation
         String emailRegex = "^[a-zA-Z0-9_+&*-]+(?:\\.[a-zA-Z0-9_+&*-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,7}$";
         Pattern pattern = Pattern.compile(emailRegex);
         Matcher matcher = pattern.matcher(email);
@@ -32,10 +31,6 @@ public class Validators {
         alert.setHeaderText(null);
         alert.setContentText("Please enter a valid email address.");
         alert.showAndWait();
-//        Optional<ButtonType> result = alert.showAndWait();
-//        if (result.isPresent() && result.get() == ButtonType.OK) {
-//            // User clicked OK, you can perform additional actions if needed
-//        }
     }
     public static boolean isValidPassword(String password) {
         // Check for at least 8 characters
@@ -127,16 +122,4 @@ public class Validators {
         alert.setContentText("Please enter a valid date of birth.");
         alert.showAndWait();
     }
-//    public static boolean isValidInvestmentName(String investmentName) {
-//        if (investmentName.matches("[a-zA-Z0-9]+")) {
-//            return true;
-//        } else return false;
-//    }
-//    public static void showInvalidInvestmentNamePopup() {
-//        Alert alert = new Alert(Alert.AlertType.ERROR);
-//        alert.setTitle("Invalid Investment Name");
-//        alert.setHeaderText(null);
-//        alert.setContentText("Please enter a valid investment name.");
-//        alert.showAndWait();
-//    }
 }

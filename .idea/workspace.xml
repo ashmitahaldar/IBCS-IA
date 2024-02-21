@@ -4,10 +4,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="2651dba4-d7fa-4278-b443-2b3640fa4299" name="Changes" comment="added investment entry update validation cuz that wasn't there b4 for some reason">
+    <list default="true" id="2651dba4-d7fa-4278-b443-2b3640fa4299" name="Changes" comment="added a validation to the investment analysis pane date picker to ensure invalid date ranges are accounted for">
       <change afterPath="$PROJECT_DIR$/appmap-20240217113538.log" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/appmap.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/compsciia/views/InvestmentAnalysisPane.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/compsciia/views/InvestmentAnalysisPane.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/compsciia/util/Validators.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/compsciia/util/Validators.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -168,7 +169,7 @@
       <workItem from="1708317968998" duration="269000" />
       <workItem from="1708482783939" duration="2762000" />
       <workItem from="1708487608643" duration="883000" />
-      <workItem from="1708521988166" duration="1719000" />
+      <workItem from="1708521988166" duration="3499000" />
     </task>
     <task id="LOCAL-00001" summary="built login/signup system and constructed navbar">
       <option name="closed" value="true" />
@@ -298,7 +299,15 @@
       <option name="project" value="LOCAL" />
       <updated>1708523510933</updated>
     </task>
-    <option name="localTasksCounter" value="17" />
+    <task id="LOCAL-00017" summary="added a validation to the investment analysis pane date picker to ensure invalid date ranges are accounted for">
+      <option name="closed" value="true" />
+      <created>1708523805097</created>
+      <option name="number" value="00017" />
+      <option name="presentableId" value="LOCAL-00017" />
+      <option name="project" value="LOCAL" />
+      <updated>1708523805097</updated>
+    </task>
+    <option name="localTasksCounter" value="18" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -344,7 +353,8 @@
     <MESSAGE value="Implemented PDF generation!" />
     <MESSAGE value="Tweaks" />
     <MESSAGE value="added investment entry update validation cuz that wasn't there b4 for some reason" />
-    <option name="LAST_COMMIT_MESSAGE" value="added investment entry update validation cuz that wasn't there b4 for some reason" />
+    <MESSAGE value="added a validation to the investment analysis pane date picker to ensure invalid date ranges are accounted for" />
+    <option name="LAST_COMMIT_MESSAGE" value="added a validation to the investment analysis pane date picker to ensure invalid date ranges are accounted for" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />
