@@ -300,7 +300,6 @@ public class InvestmentAnalysisPane {
             } else {
                 Double xirrRate = 0.0;
                 if (cumulativeRadioButton.isSelected()) {
-                    // TODO: Calculate XIRR
                     ArrayList<Transaction> transactions = new ArrayList<>();
                     for (Investment investment : investments.get()) {
                         Double amount = investment.getInvestmentAmount();
@@ -310,7 +309,6 @@ public class InvestmentAnalysisPane {
                     xirrRate = new Xirr(transactions).xirr();
                     xirrTextField.setText(xirrRate.toString());
                 } else {
-                    // TODO: Calculate XIRR
                     ArrayList<Transaction> transactions = new ArrayList<>();
                     for (Investment investment : investments.get()) {
                         Double amount = investment.getInvestmentAmount();

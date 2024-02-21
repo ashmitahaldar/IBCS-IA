@@ -344,7 +344,7 @@ public class ClientRecordsPane {
 
         investmentUpdateButton.setOnAction(e -> {
             Investment selectedInvestment = (Investment) investmentsTable.getSelectionModel().getSelectedItem();
-            InvestmentService.updateInvestmentInDatabase(selectedInvestment.getInvestmentId(), textFieldInvestmentName.getText(), Double.parseDouble(textFieldInvestmentAmount.getText()), fieldInvestmentDate.getValue(), textFieldInvestmentDescription.getText());
+            isValidInvestmentUpdate(selectedInvestment.getInvestmentId(), textFieldInvestmentName.getText(), Double.parseDouble(textFieldInvestmentAmount.getText()), fieldInvestmentDate.getValue(), textFieldInvestmentDescription.getText());
             int comboBoxSelectedClientId = Integer.parseInt(comboBoxChooseClient.getSelectionModel().getSelectedItem().split("\\(")[1].split("\\)")[0]);
             investments.set(InvestmentService.getAllInvestmentsFromDatabaseForClient(comboBoxSelectedClientId));
             setInvestmentTableViewItems(investmentsTable, investments.get());
@@ -542,6 +542,39 @@ public class ClientRecordsPane {
         }
         else {
             ClientService.updateClientInDatabase(client_id, client_first_name, client_last_name, client_email, client_phone_number, client_date_of_birth, client_address, client_registered_id);
+        }
+    }
+
+    private static void isValidInvestmentUpdate(int investment_id, String investment_name, double investment_amount, LocalDate investment_date, String investment_description){
+        if (investment_name == null || investment_name.isEmpty()){
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error");
+            alert.setHeaderText(null);
+            alert.setContentText("Please enter an investment name.");
+            alert.showAndWait();
+        } else if (investment_amount == 0.0){
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error");
+            alert.setHeaderText(null);
+            alert.setContentText("Please enter an investment amount.");
+            alert.showAndWait();
+        }
+        else if (investment_date == null){
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error");
+            alert.setHeaderText(null);
+            alert.setContentText("Please enter an investment date.");
+            alert.showAndWait();
+        }
+//        else if (investment_description == null || investment_description.isEmpty()){
+//            Alert alert = new Alert(Alert.AlertType.ERROR);
+//            alert.setTitle("Error");
+//            alert.setHeaderText(null);
+//            alert.setContentText("Please enter an investment description.");
+//            alert.showAndWait();
+//        }
+        else {
+            InvestmentService.updateInvestmentInDatabase(investment_id, investment_name, investment_amount, investment_date, investment_description);
         }
     }
 }
