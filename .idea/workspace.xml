@@ -4,12 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="2651dba4-d7fa-4278-b443-2b3640fa4299" name="Changes" comment="Tweaks">
+    <list default="true" id="2651dba4-d7fa-4278-b443-2b3640fa4299" name="Changes" comment="added investment entry update validation cuz that wasn't there b4 for some reason">
       <change afterPath="$PROJECT_DIR$/appmap-20240217113538.log" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/appmap.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/compsciia/util/Validators.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/compsciia/util/Validators.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/compsciia/views/ClientRecordsPane.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/compsciia/views/ClientRecordsPane.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/example/compsciia/views/InvestmentAnalysisPane.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/compsciia/views/InvestmentAnalysisPane.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -171,7 +168,7 @@
       <workItem from="1708317968998" duration="269000" />
       <workItem from="1708482783939" duration="2762000" />
       <workItem from="1708487608643" duration="883000" />
-      <workItem from="1708521988166" duration="1338000" />
+      <workItem from="1708521988166" duration="1719000" />
     </task>
     <task id="LOCAL-00001" summary="built login/signup system and constructed navbar">
       <option name="closed" value="true" />
@@ -293,7 +290,15 @@
       <option name="project" value="LOCAL" />
       <updated>1708166902151</updated>
     </task>
-    <option name="localTasksCounter" value="16" />
+    <task id="LOCAL-00016" summary="added investment entry update validation cuz that wasn't there b4 for some reason">
+      <option name="closed" value="true" />
+      <created>1708523510933</created>
+      <option name="number" value="00016" />
+      <option name="presentableId" value="LOCAL-00016" />
+      <option name="project" value="LOCAL" />
+      <updated>1708523510933</updated>
+    </task>
+    <option name="localTasksCounter" value="17" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -338,18 +343,8 @@
     <MESSAGE value="Implemented Email sending; Forgot Password functionality and Sign Up confirmation" />
     <MESSAGE value="Implemented PDF generation!" />
     <MESSAGE value="Tweaks" />
-    <option name="LAST_COMMIT_MESSAGE" value="Tweaks" />
-  </component>
-  <component name="XDebuggerManager">
-    <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/com/example/compsciia/views/ClientRecordsPane.java</url>
-          <line>573</line>
-          <option name="timeStamp" value="2" />
-        </line-breakpoint>
-      </breakpoints>
-    </breakpoint-manager>
+    <MESSAGE value="added investment entry update validation cuz that wasn't there b4 for some reason" />
+    <option name="LAST_COMMIT_MESSAGE" value="added investment entry update validation cuz that wasn't there b4 for some reason" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />
