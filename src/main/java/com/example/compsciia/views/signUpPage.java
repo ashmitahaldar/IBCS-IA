@@ -3,7 +3,6 @@ import com.example.compsciia.compsciia;
 import com.example.compsciia.util.UserService;
 import com.example.compsciia.util.EmailService;
 import com.example.compsciia.util.Validators;
-import javafx.collections.FXCollections;
 import javafx.concurrent.Task;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
@@ -14,8 +13,6 @@ import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
 import java.util.Objects;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 public class signUpPage {
     public Scene createScene(Stage stage, loginPage loginPage) {

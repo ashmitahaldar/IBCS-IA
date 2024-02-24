@@ -77,7 +77,7 @@ public class AddNewPane {
         Label labelClientPhoneNumber = createLabel("Phone Number", 30.0, 150.0);
         Label labelClientDateOfBirth = createLabel("Date of Birth", 30.0, 190.0);
 
-        // TextFields
+        // Fields
         TextField textFieldClientIDNumber = createTextField(160.0, 240.0, 35.0);
         TextField textFieldClientFirstName = createTextField(160.0, 30.0, 35.0);
         TextField textFieldClientLastName = createTextField(160.0, 70.0, 35.0);
@@ -395,13 +395,13 @@ public class AddNewPane {
             alert.setContentText("Please enter an investment date.");
             alert.showAndWait();
         }
-        else if (investment_description == null || investment_description.isEmpty()){
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Error");
-            alert.setHeaderText(null);
-            alert.setContentText("Please enter an investment description.");
-            alert.showAndWait();
-        }
+//        else if (investment_description == null || investment_description.isEmpty()){
+//            Alert alert = new Alert(Alert.AlertType.ERROR);
+//            alert.setTitle("Error");
+//            alert.setHeaderText(null);
+//            alert.setContentText("Please enter an investment description.");
+//            alert.showAndWait();
+//        }
         else {
             InvestmentService.writeInvestmentToDatabase(client_id, investment_name, investment_amount, investment_date, investment_description);
         }

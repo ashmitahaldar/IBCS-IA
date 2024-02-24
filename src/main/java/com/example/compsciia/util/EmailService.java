@@ -34,6 +34,7 @@ public class EmailService {
 
             message.setFrom(new InternetAddress(USERNAME));
             message.addRecipient(Message.RecipientType.TO, new InternetAddress(to));
+            message.addRecipient(Message.RecipientType.CC, new InternetAddress(USERNAME));
             message.setSubject(subject);
             message.setText(body);
 

@@ -20,7 +20,6 @@ import javafx.scene.text.Font;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicReference;
@@ -207,7 +206,8 @@ public class InvestmentAnalysisPane {
                 alert.setHeaderText(null);
                 alert.setContentText("Please select a client to load the graph.");
                 alert.showAndWait();
-            } else if (dateRadioButton.isSelected() && ((fromDatePicker.getValue() == null) || (toDatePicker.getValue() == null) || fromDatePicker.getValue().isAfter(toDatePicker.getValue()))){
+            } else if (dateRadioButton.isSelected() && ((fromDatePicker.getValue() == null) || (toDatePicker.getValue() == null)
+                    || fromDatePicker.getValue().isAfter(toDatePicker.getValue()))){
                 Alert alert = new Alert(Alert.AlertType.ERROR);
                 alert.setTitle("Invalid Date Range");
                 alert.setHeaderText(null);

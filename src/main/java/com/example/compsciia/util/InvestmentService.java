@@ -1,6 +1,5 @@
 package com.example.compsciia.util;
 
-import com.example.compsciia.models.Client;
 import com.example.compsciia.models.Investment;
 import javafx.scene.control.Alert;
 
@@ -9,13 +8,14 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.Date;
 import java.util.Objects;
 import java.util.ArrayList;
 public class InvestmentService {
 
-    public static void writeInvestmentToDatabase(int client_id, String investment_name, Double investment_amount, LocalDate investment_date, String investment_description){
-        String query = "INSERT INTO investments (client_id, investment_name, investment_amount, investment_date, investment_description) VALUES (?, ?, ?, ?, ?)";
+    public static void writeInvestmentToDatabase(int client_id, String investment_name, Double investment_amount,
+                                                 LocalDate investment_date, String investment_description){
+        String query = "INSERT INTO investments (client_id, investment_name, investment_amount, investment_date, " +
+                "investment_description) VALUES (?, ?, ?, ?, ?)";
 
         try (Connection conn = database.connect(); PreparedStatement stmt = Objects.requireNonNull(conn).prepareStatement(query)) {
             stmt.setInt(1, client_id);
@@ -40,27 +40,30 @@ public class InvestmentService {
         }
     }
 
-    public static Investment getInvestmentFromDatabase(int investment_id){
-        String query = "SELECT * FROM investments WHERE investment_id = ?";
-        Investment investment = null;
+//    public static Investment getInvestmentFromDatabase(int investment_id){
+//        String query = "SELECT * FROM investments WHERE investment_id = ?";
+//        Investment investment = null;
+//
+//        try (Connection conn = database.connect(); PreparedStatement stmt = Objects.requireNonNull(conn).prepareStatement(query)) {
+//            stmt.setInt(1, investment_id);
+//            ResultSet rs = stmt.executeQuery();
+//            while (rs.next()) {
+//                investment = Investment.fromResultSet(rs);
+//                System.out.println("Investment ID: " + investment.getInvestmentId());
+//                System.out.println("Client ID: " + investment.getClientId());
+//                System.out.println("Investment retrieved from database");
+//            }
+//        } catch (SQLException e) {
+//            System.out.println(e.getMessage());
+//        }
+//        return investment;
+//    }
 
-        try (Connection conn = database.connect(); PreparedStatement stmt = Objects.requireNonNull(conn).prepareStatement(query)) {
-            stmt.setInt(1, investment_id);
-            ResultSet rs = stmt.executeQuery();
-            while (rs.next()) {
-                investment = Investment.fromResultSet(rs);
-                System.out.println("Investment ID: " + investment.getInvestmentId());
-                System.out.println("Client ID: " + investment.getClientId());
-                System.out.println("Investment retrieved from database");
-            }
-        } catch (SQLException e) {
-            System.out.println(e.getMessage());
-        }
-        return investment;
-    }
-
-    public static void updateInvestmentInDatabase(Integer investmentId, String newInvestmentName, Double newInvestmentAmount, LocalDate newInvestmentDate, String newInvestmentDescription){
-        String query = "UPDATE investments SET investment_name = ?, investment_amount = ?, investment_date = ?, investment_description = ? WHERE investment_id = ?";
+    public static void updateInvestmentInDatabase(Integer investmentId, String newInvestmentName,
+                                                  Double newInvestmentAmount, LocalDate newInvestmentDate,
+                                                  String newInvestmentDescription){
+        String query = "UPDATE investments SET investment_name = ?, investment_amount = ?, investment_date = ?, " +
+                "investment_description = ? WHERE investment_id = ?";
 
         try (Connection conn = database.connect(); PreparedStatement stmt = Objects.requireNonNull(conn).prepareStatement(query)) {
             stmt.setString(1, newInvestmentName);
@@ -111,32 +114,10 @@ public class InvestmentService {
             stmt.executeUpdate();
             System.out.println("Client ID: " + client_id);
             System.out.println("Investments deleted from database");
-//            Alert alert = new Alert(Alert.AlertType.INFORMATION);
-//            alert.setTitle("Investments Deleted");
-//            alert.setHeaderText(null);
-//            alert.setContentText("All investments for client with ID " + client_id + " have been deleted from the database successfully.");
-//            alert.showAndWait();
             System.out.println("All investments for client with ID " + client_id + " have been deleted from the database successfully.");
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
-    }
-
-    public static ArrayList<Investment> getAllInvestmentsFromDatabase(){
-        String query = "SELECT * FROM investments";
-        ArrayList<Investment> investments = new ArrayList<>();
-
-        try (Connection conn = database.connect(); PreparedStatement stmt = Objects.requireNonNull(conn).prepareStatement(query)) {
-            ResultSet rs = stmt.executeQuery();
-            while (rs.next()) {
-                Investment investment = Investment.fromResultSet(rs);
-                investments.add(investment);
-                System.out.println("Client with ID " + investment.getInvestmentId() + " retrieved from database");
-            }
-        } catch (SQLException e) {
-            System.out.println(e.getMessage());
-        }
-        return investments;
     }
 
     public static ArrayList<Investment> getAllInvestmentsFromDatabaseForClient(int client_id){
@@ -155,24 +136,6 @@ public class InvestmentService {
             System.out.println(e.getMessage());
         }
         return investments;
-    }
-
-    public static ArrayList<Integer> getAllInvestmentIDsFromDatabaseForClient(int client_id){
-        String query = "SELECT investment_id FROM investments WHERE client_id = ?";
-        ArrayList<Integer> investmentIDs = new ArrayList<>();
-
-        try (Connection conn = database.connect(); PreparedStatement stmt = Objects.requireNonNull(conn).prepareStatement(query)) {
-            stmt.setInt(1, client_id);
-            ResultSet rs = stmt.executeQuery();
-            while (rs.next()) {
-                int investmentID = rs.getInt(1);
-                investmentIDs.add(investmentID);
-                System.out.println("Investment ID " + investmentID + " retrieved from database");
-            }
-        } catch (SQLException e) {
-            System.out.println(e.getMessage());
-        }
-        return investmentIDs;
     }
 
     public static Integer getNumberOfInvestmentsFromDatabaseForUser(int user_id){

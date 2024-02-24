@@ -12,8 +12,12 @@ import java.util.Objects;
 import java.util.ArrayList;
 
 public class ClientService {
-    public static void writeClientToDatabase(int user_id, String client_first_name, String client_last_name, String client_email, String client_phone_number, LocalDate client_date_of_birth, String client_address, String client_registered_id){
-        String query = "INSERT INTO clients (user_id, client_first_name, client_last_name, client_email, client_phone_number, client_date_of_birth, client_address, client_registered_id) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+    public static void writeClientToDatabase(int user_id, String client_first_name, String client_last_name,
+                                             String client_email, String client_phone_number,
+                                             LocalDate client_date_of_birth, String client_address,
+                                             String client_registered_id){
+        String query = "INSERT INTO clients (user_id, client_first_name, client_last_name, client_email, " +
+                "client_phone_number, client_date_of_birth, client_address, client_registered_id) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
 
         try (Connection conn = database.connect(); PreparedStatement stmt = Objects.requireNonNull(conn).prepareStatement(query)) {
             stmt.setInt(1, user_id);
@@ -37,7 +41,8 @@ public class ClientService {
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
             alert.setTitle("New Client Added");
             alert.setHeaderText(null);
-            alert.setContentText("New client " + client_first_name + " " + client_last_name + " has been added to the database successfully. Please reload the page for changes to be reflected.");
+            alert.setContentText("New client " + client_first_name + " " + client_last_name + " has been added to the " +
+                    "database successfully. Please reload the page for changes to be reflected.");
             alert.showAndWait();
         } catch (SQLException e) {
             System.out.println(e.getMessage());
@@ -63,28 +68,13 @@ public class ClientService {
         return client;
     }
 
-    public static Client getClientFromDatabase(String client_first_name, String client_last_name){
-        String query = "SELECT * FROM clients WHERE client_first_name = ? AND client_last_name = ?";
-        Client client = null;
-
-        try (Connection conn = database.connect(); PreparedStatement stmt = Objects.requireNonNull(conn).prepareStatement(query)) {
-            stmt.setString(1, client_first_name);
-            stmt.setString(2, client_last_name);
-            ResultSet rs = stmt.executeQuery();
-            while (rs.next()) {
-                client = Client.fromResultSet(rs);
-                System.out.println("Client ID: " + client.getClientId());
-                System.out.println("User ID: " + client.getUserId());
-                System.out.println("Client retrieved from database");
-            }
-        } catch (SQLException e) {
-            System.out.println(e.getMessage());
-        }
-        return client;
-    }
-
-    public static void updateClientInDatabase(int client_id, String client_first_name, String client_last_name, String client_email, String client_phone_number, LocalDate client_date_of_birth, String client_address, String client_registered_id){
-        String query = "UPDATE clients SET client_first_name = ?, client_last_name = ?, client_email = ?, client_phone_number = ?, client_date_of_birth = ?, client_address = ?, client_registered_id = ? WHERE client_id = ?";
+    public static void updateClientInDatabase(int client_id, String client_first_name, String client_last_name,
+                                              String client_email, String client_phone_number,
+                                              LocalDate client_date_of_birth, String client_address,
+                                              String client_registered_id){
+        String query = "UPDATE clients SET client_first_name = ?, client_last_name = ?, client_email = ?, " +
+                "client_phone_number = ?, client_date_of_birth = ?, client_address = ?, client_registered_id = ? " +
+                "WHERE client_id = ?";
 
         try (Connection conn = database.connect(); PreparedStatement stmt = Objects.requireNonNull(conn).prepareStatement(query)) {
             stmt.setString(1, client_first_name);
@@ -116,7 +106,7 @@ public class ClientService {
         }
     }
 
-public static void deleteClientFromDatabase(int client_id){
+    public static void deleteClientFromDatabase(int client_id){
         InvestmentService.clearAllInvestmentsFromDatabaseForClient(client_id);
         String query = "DELETE FROM clients WHERE client_id = ?";
 
@@ -133,23 +123,6 @@ public static void deleteClientFromDatabase(int client_id){
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
-    }
-
-    public static ArrayList<Client> getAllClientsFromDatabase(){
-        String query = "SELECT * FROM clients";
-        ArrayList<Client> clients = new ArrayList<>();
-
-        try (Connection conn = database.connect(); PreparedStatement stmt = Objects.requireNonNull(conn).prepareStatement(query)) {
-            ResultSet rs = stmt.executeQuery();
-            while (rs.next()) {
-                Client client = Client.fromResultSet(rs);
-                clients.add(client);
-                System.out.println("Client with ID " + client.getClientId() + " retrieved from database");
-            }
-        } catch (SQLException e) {
-            System.out.println(e.getMessage());
-        }
-        return clients;
     }
 
     public static ArrayList<Client> getAllClientsFromDatabaseForUser(int user_id){

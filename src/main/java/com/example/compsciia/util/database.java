@@ -2,10 +2,6 @@ package com.example.compsciia.util;
 import java.sql.*;
 
 public class database {
-
-    public database() throws SQLException {
-    }
-
     public static Connection connect(){
         Connection conn;
         try {

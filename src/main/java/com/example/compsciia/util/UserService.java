@@ -41,9 +41,7 @@ public class UserService {
             System.out.println("User added to database");
         } catch (SQLException e) {
             System.out.println(e.getMessage());
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        } catch (URISyntaxException e) {
+        } catch (IOException | URISyntaxException e) {
             throw new RuntimeException(e);
         }
     }
@@ -66,8 +64,10 @@ public class UserService {
         }
     }
 
-    public static void updateUserInDatabase(Integer userId, String newEmail, String newPassword, String newUsername, String newFirstName, String newLastName, String newPhoneNumber, LocalDate newDateOfBirth){
-        String query = "UPDATE app_users SET email = ?, password = ?, username = ?, first_name = ?, last_name = ?, phone_number = ?, date_of_birth = ? WHERE id = ?";
+    public static void updateUserInDatabase(Integer userId, String newEmail, String newPassword, String newUsername,
+                                            String newFirstName, String newLastName, String newPhoneNumber, LocalDate newDateOfBirth){
+        String query = "UPDATE app_users SET email = ?, password = ?, username = ?, first_name = ?, last_name = ?, " +
+                "phone_number = ?, date_of_birth = ? WHERE id = ?";
 
         try (Connection conn = database.connect(); PreparedStatement stmt = Objects.requireNonNull(conn).prepareStatement(query)) {
             stmt.setString(1, newEmail);
@@ -136,23 +136,6 @@ public class UserService {
         return user;
     }
 
-    public static ArrayList<User> getAllUsersFromDatabase(){
-        ArrayList<User> users = new ArrayList<>();
-        String query = "SELECT * FROM app_users";
-
-        try (Connection conn = database.connect(); PreparedStatement stmt = Objects.requireNonNull(conn).prepareStatement(query)) {
-            ResultSet resultset = stmt.executeQuery();
-            while (resultset.next()) {
-                User user = User.fromResultSet(resultset);
-                users.add(user);
-                System.out.println("User retrieved from database");
-            }
-        } catch (SQLException | IOException e) {
-            System.out.println(e.getMessage());
-        }
-        return users;
-    }
-
     public static void clearUserAccountData(int user_id){
         ArrayList<Integer> clientIds = new ArrayList<>(ClientService.getAllClientIDsFromDatabaseForUser(user_id));
         for (Integer clientId : clientIds) {
@@ -203,16 +186,6 @@ public class UserService {
             System.out.println(e.getMessage());
         }
         return false;
-    }
-    public static BufferedImage convertToBufferedImage(Image image)
-    {
-        BufferedImage newImage = new BufferedImage(
-                image.getWidth(null), image.getHeight(null),
-                BufferedImage.TYPE_INT_ARGB);
-        Graphics2D g = newImage.createGraphics();
-        g.drawImage(image, 0, 0, null);
-        g.dispose();
-        return newImage;
     }
 
     public static Boolean checkIfUserExists(String email){
