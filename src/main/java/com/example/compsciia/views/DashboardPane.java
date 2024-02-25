@@ -167,9 +167,8 @@ public class DashboardPane {
         listView.getStylesheets().add(compsciia.class.getResource("stylesheet.css").toExternalForm());
 
         // BarChart
-        CategoryAxis xAxisClientNames = new CategoryAxis();
-        NumberAxis yAxisNumberOfInvestments = new NumberAxis();
-        ObservableList<XYChart.Series<String, Number>> dashboardInvestmentsClientGraphSeries = FXCollections.observableArrayList();
+        ObservableList<XYChart.Series<String, Number>> dashboardInvestmentsClientGraphSeries
+                = FXCollections.observableArrayList();
         BarChart<String, Number> barChart = new BarChart<>(new CategoryAxis(), new NumberAxis());
         barChart.setLayoutX(320.0);
         barChart.setLayoutY(40.0);

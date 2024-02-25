@@ -141,7 +141,9 @@ public class loginPage {
         signUpButton.setPrefHeight(30.0);
         signUpButton.setPrefWidth(120.0);
         signUpButton.getStyleClass().add("button-design");
-        // When the sign up button is clicked, switches the scene to the sign up page
+        // When the Sign Up button is clicked, switches the scene to the Sign Up page
+        // An instance of the loginPage scene is passed to the signUpPage scene to allow the user to switch back
+        // to the login page
         signUpButton.setOnAction(e -> stage.setScene(signUpPage.createScene(stage, new loginPage())));
 
         // Forgot Password Hyperlink
@@ -164,7 +166,7 @@ public class loginPage {
                 Platform.runLater(emailTextField1::requestFocus);
                 dialog.setResultConverter(dialogButton -> {
                     if (dialogButton == resetButtonType) {
-                        // If user enters email, calls the forgotPassword method
+                        // If user enters email and clicks "Send Email", calls the forgotPassword method
                         forgotPassword(emailTextField1.getText());
                     }
                     return null;
@@ -182,7 +184,8 @@ public class loginPage {
 
         // Returns the scene
         Scene scene = new Scene(root, 960, 540);
-        scene.getStylesheets().add(Objects.requireNonNull(compsciia.class.getResource("/com/example/compsciia/stylesheet.css")).toExternalForm());
+        scene.getStylesheets().add(Objects.requireNonNull(compsciia.class.
+                getResource("/com/example/compsciia/stylesheet.css")).toExternalForm());
         return scene;
     }
 

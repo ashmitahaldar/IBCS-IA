@@ -12,10 +12,6 @@ public class EmailService {
     private static final String PASSWORD = Config.getProperty("SMTP_PASSWORD");
 
     public static void sendEmail(String to, String subject, String body) {
-//        Properties properties = System.getProperties();
-//        properties.setProperty("mail.smtp.host", HOST);
-//        properties.setProperty("mail.smtp.auth", "true");
-
         Properties properties = new Properties();
         properties.put("mail.smtp.host", "smtp.gmail.com");
         properties.put("mail.smtp.port", "587");

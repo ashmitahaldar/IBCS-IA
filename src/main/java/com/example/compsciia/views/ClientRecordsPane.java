@@ -355,8 +355,10 @@ public class ClientRecordsPane {
             FileChooser fileChooser = new FileChooser();
             fileChooser.setTitle("Save PDF");
             fileChooser.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("PDF Files", "*.pdf"));
-            fileChooser.setInitialFileName("Investment Records - " + selectedClient.getClientFirstName() + " " + selectedClient.getClientLastName() + ".pdf");
-            String filePath = fileChooser.showSaveDialog(investmentPrintAllButton.getScene().getWindow()).getAbsolutePath();
+            fileChooser.setInitialFileName("Investment Records - " + selectedClient.getClientFirstName() + " " +
+                    selectedClient.getClientLastName() + ".pdf");
+            String filePath = fileChooser.showSaveDialog(investmentPrintAllButton.getScene().getWindow())
+                    .getAbsolutePath();
             PDFGenerator.printAllInvestmentData(investments.get(), filePath);
         });
 
@@ -442,7 +444,8 @@ public class ClientRecordsPane {
         registeredIdColumn.setCellValueFactory(new PropertyValueFactory<>("clientRegisteredId"));
 
         // Step 4: Add Columns to TableView
-        clientsTable.getColumns().addAll(clientIdColumn, firstNameColumn, lastNameColumn, emailColumn, phoneNumberColumn, addressColumn, registeredIdColumn);
+        clientsTable.getColumns().addAll(clientIdColumn, firstNameColumn, lastNameColumn, emailColumn,
+                phoneNumberColumn, addressColumn, registeredIdColumn);
 
         ObservableList<Client> clientsObservableList = FXCollections.observableArrayList(clients);
 

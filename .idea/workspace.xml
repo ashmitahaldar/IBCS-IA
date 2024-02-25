@@ -4,13 +4,22 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="2651dba4-d7fa-4278-b443-2b3640fa4299" name="Changes" comment="deleted some comments">
+    <list default="true" id="2651dba4-d7fa-4278-b443-2b3640fa4299" name="Changes" comment="minor code formatting tweaks while writing Criterion C documentation">
       <change afterPath="$PROJECT_DIR$/appmap-20240217113538.log" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/appmap.yml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/compsciia/compsciia.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/compsciia/compsciia.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/compsciia/models/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/compsciia/models/User.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/example/compsciia/util/EmailService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/compsciia/util/EmailService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/compsciia/util/database.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/compsciia/util/database.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/compsciia/views/AddNewPane.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/compsciia/views/AddNewPane.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/compsciia/util/PaneSwitcher.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/compsciia/util/PaneSwitcher.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/compsciia/util/UserService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/compsciia/util/UserService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/compsciia/views/ClientRecordsPane.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/compsciia/views/ClientRecordsPane.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/compsciia/views/Dashboard.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/compsciia/views/Dashboard.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/compsciia/views/DashboardPane.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/compsciia/views/DashboardPane.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/compsciia/views/InvestmentAnalysisPane.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/compsciia/views/InvestmentAnalysisPane.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/compsciia/views/ProfilePane.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/compsciia/views/ProfilePane.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/compsciia/views/loginPage.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/compsciia/views/loginPage.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/compsciia/views/signUpPage.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/compsciia/views/signUpPage.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -69,7 +78,7 @@
     &quot;project.structure.last.edited&quot;: &quot;Modules&quot;,
     &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
     &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;inlay.hints&quot;,
     &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   },
   &quot;keyToStringList&quot;: {
@@ -175,6 +184,8 @@
       <workItem from="1708575347640" duration="1984000" />
       <workItem from="1708627581860" duration="636000" />
       <workItem from="1708666055704" duration="6534000" />
+      <workItem from="1708771224367" duration="16709000" />
+      <workItem from="1708833669892" duration="23703000" />
     </task>
     <task id="LOCAL-00001" summary="built login/signup system and constructed navbar">
       <option name="closed" value="true" />
@@ -320,7 +331,15 @@
       <option name="project" value="LOCAL" />
       <updated>1708541019915</updated>
     </task>
-    <option name="localTasksCounter" value="19" />
+    <task id="LOCAL-00019" summary="minor code formatting tweaks while writing Criterion C documentation">
+      <option name="closed" value="true" />
+      <created>1708805172649</created>
+      <option name="number" value="00019" />
+      <option name="presentableId" value="LOCAL-00019" />
+      <option name="project" value="LOCAL" />
+      <updated>1708805172649</updated>
+    </task>
+    <option name="localTasksCounter" value="20" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -368,7 +387,8 @@
     <MESSAGE value="added investment entry update validation cuz that wasn't there b4 for some reason" />
     <MESSAGE value="added a validation to the investment analysis pane date picker to ensure invalid date ranges are accounted for" />
     <MESSAGE value="deleted some comments" />
-    <option name="LAST_COMMIT_MESSAGE" value="deleted some comments" />
+    <MESSAGE value="minor code formatting tweaks while writing Criterion C documentation" />
+    <option name="LAST_COMMIT_MESSAGE" value="minor code formatting tweaks while writing Criterion C documentation" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

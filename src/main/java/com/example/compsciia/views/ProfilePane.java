@@ -150,7 +150,8 @@ public class ProfilePane {
                 String imageFilePath = imageFile.toURI().toString();
                 UserService.updateUserImageInDatabase(userId, imageFile);
                 profilePicture.setFill(new javafx.scene.paint.ImagePattern(new Image(imageFilePath)));
-                profilePaneTextFieldUpdate(userId, user, textFieldUsername, textFieldFirstName, textFieldLastName, textFieldEmailAddress, textFieldPassword, textFieldPhoneNumber, fieldDateOfBirth);
+                profilePaneTextFieldUpdate(userId, user, textFieldUsername, textFieldFirstName, textFieldLastName,
+                        textFieldEmailAddress, textFieldPassword, textFieldPhoneNumber, fieldDateOfBirth);
             }
         });
 
@@ -216,7 +217,11 @@ public class ProfilePane {
 
         return root;
     }
-    private static void profilePaneTextFieldUpdate(Integer userId, AtomicReference<User> user, TextField textFieldUsername, TextField textFieldFirstName, TextField textFieldLastName, TextField textFieldEmailAddress, TextField textFieldPassword, TextField textFieldPhoneNumber, DatePicker fieldDateOfBirth) {
+    private static void profilePaneTextFieldUpdate(Integer userId, AtomicReference<User> user,
+                                                   TextField textFieldUsername, TextField textFieldFirstName,
+                                                   TextField textFieldLastName, TextField textFieldEmailAddress,
+                                                   TextField textFieldPassword, TextField textFieldPhoneNumber,
+                                                   DatePicker fieldDateOfBirth) {
         user.set(getCurrentUser(userId));
         textFieldUsername.setText(user.get().getUsername());
         textFieldFirstName.setText(user.get().getFirstName());
@@ -235,7 +240,8 @@ public class ProfilePane {
         label.setFont(new javafx.scene.text.Font(fontSize));
     }
 
-    private static void setTextFieldProperties(TextField textField, String value, double layoutX, double layoutY, double prefHeight, double prefWidth) {
+    private static void setTextFieldProperties(TextField textField, String value, double layoutX, double layoutY,
+                                               double prefHeight, double prefWidth) {
         textField.setLayoutX(layoutX);
         textField.setLayoutY(layoutY);
         textField.setPrefHeight(prefHeight);

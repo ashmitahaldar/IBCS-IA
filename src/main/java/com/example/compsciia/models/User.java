@@ -34,7 +34,8 @@ public class User {
         this.username = username;
     }
 
-    public User(int id, String username, String email, String password, String firstName, String lastName, String phoneNumber, LocalDate dateOfBirth) {
+    public User(int id, String username, String email, String password, String firstName, String lastName,
+                String phoneNumber, LocalDate dateOfBirth) {
         this.id = id;
         this.email = email;
         this.password = password;
@@ -45,7 +46,8 @@ public class User {
         this.dateOfBirth = dateOfBirth;
     }
 
-    public User(int id, String username, String email, String password, String firstName, String lastName, String phoneNumber, LocalDate dateOfBirth, Image profileImage) {
+    public User(int id, String username, String email, String password, String firstName, String lastName,
+                String phoneNumber, LocalDate dateOfBirth, Image profileImage) {
         this.id = id;
         this.email = email;
         this.password = password;

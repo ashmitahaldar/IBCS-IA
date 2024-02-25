@@ -25,7 +25,8 @@ import java.util.concurrent.atomic.AtomicReference;
 
 public class Dashboard {
     public static Scene createScene(Stage stage, loginPage loginPage, Integer userId) throws IOException {
-        // Create a user object and set it to the user from the database, then create a new AtomicReference with the user object
+        // Create a user object and set it to the user from the database, then create a new AtomicReference with the
+        // user object
         // The AtomicReference is used to store the user object so that it can be updated in the future
         AtomicReference<User> user = new AtomicReference<>(UserService.getUserFromDatabase(userId));
 

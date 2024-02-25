@@ -134,6 +134,8 @@ public class signUpPage {
         loginButton.setPrefWidth(100.0);
         loginButton.getStyleClass().add("button-design");
         // Set the action for the login button
+        // Similarly, an instance of the signUpPage is created and passed to the new loginPage which is set to the stage
+        // to allow the user to navigate to the Sign Up page again if they wish
         loginButton.setOnAction(e -> stage.setScene(loginPage.createScene(stage, new signUpPage())));
 
         // Sign Up Button

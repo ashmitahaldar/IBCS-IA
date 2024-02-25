@@ -215,17 +215,11 @@ public class UserService {
                 System.out.println("Email: " + email);
                 System.out.println("User exists");
                 String password = resultset.getString("password");
-                String username = resultset.getString("username");
                 String firstName = resultset.getString("first_name");
                 String lastName = resultset.getString("last_name");
-                String phoneNumber = resultset.getString("phone_number");
-                LocalDate dateOfBirth = resultset.getObject("date_of_birth", LocalDate.class);
-//                String message = "Hi " + firstName + " " + lastName + ",\n\nYour password is: " + password + "\n\nKind regards,\nClientify";
-//                EmailService.sendEmail(email, "Clientify - Forgot Password", message);
-//                System.out.println(message);
                 String code = generateConfirmationCode();
-                String message = "Hi " + firstName + " " + lastName + ",\n\nYour confirmation code is: " + code + "\n\nKind regards,\nClientify";
-//                EmailService.sendEmail(email, "Clientify - Forgot Password", message);
+                String message = "Hi " + firstName + " " + lastName + ",\n\nYour confirmation code is: " + code
+                        + "\n\nKind regards,\nClientify";
                 Task<Void> sendForgotPasswordConfirmationCodeTask = new Task<Void>() {
                     @Override
                     protected Void call() throws Exception {

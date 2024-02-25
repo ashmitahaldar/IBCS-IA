@@ -15,7 +15,7 @@ public class compsciia extends Application {
         loginPage loginPage = new loginPage();
         signUpPage signUpPage = new signUpPage();
         Scene loginScene = loginPage.createScene(stage, signUpPage);
-        stage.setTitle("Computer Science IA");
+        stage.setTitle("Clientify");
         stage.setScene(loginScene);
         stage.show();
     }

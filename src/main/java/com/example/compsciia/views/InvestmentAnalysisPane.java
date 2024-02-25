@@ -79,7 +79,8 @@ public class InvestmentAnalysisPane {
         chooseClientLabel.setPrefWidth(125.0);
         chooseClientLabel.setFont(new Font(20.0));
 
-        AtomicReference<ArrayList<Client>> clients = new AtomicReference<ArrayList<Client>>(ClientService.getAllClientsFromDatabaseForUser(userId));
+        AtomicReference<ArrayList<Client>> clients = new AtomicReference<ArrayList<Client>>
+                (ClientService.getAllClientsFromDatabaseForUser(userId));
         AtomicReference<ArrayList<Investment>> investments = new AtomicReference<>();
         ComboBox<String> comboBox = new ComboBox<>();
         comboBox.setLayoutX(150.0);
@@ -93,7 +94,8 @@ public class InvestmentAnalysisPane {
             protected List<String> call() throws Exception {
                 ArrayList<String> clientNames = new ArrayList<>();
                 for (Client client : clients.get()) {
-                    clientNames.add(client.getClientFirstName() + " " + client.getClientLastName() + " (" + client.getClientId() + ")");
+                    clientNames.add(client.getClientFirstName() + " " + client.getClientLastName()
+                            + " (" + client.getClientId() + ")");
                 }
                 return clientNames;
             }
@@ -206,7 +208,8 @@ public class InvestmentAnalysisPane {
                 alert.setHeaderText(null);
                 alert.setContentText("Please select a client to load the graph.");
                 alert.showAndWait();
-            } else if (dateRadioButton.isSelected() && ((fromDatePicker.getValue() == null) || (toDatePicker.getValue() == null)
+            } else if (dateRadioButton.isSelected() && ((fromDatePicker.getValue() == null)
+                    || (toDatePicker.getValue() == null)
                     || fromDatePicker.getValue().isAfter(toDatePicker.getValue()))){
                 Alert alert = new Alert(Alert.AlertType.ERROR);
                 alert.setTitle("Invalid Date Range");
@@ -232,7 +235,8 @@ public class InvestmentAnalysisPane {
                             };
                             retrievedInvestments.sort(investmentComparatorByDate);
                             for (Investment investment : retrievedInvestments) {
-                                series.getData().add(new XYChart.Data<>(investment.getInvestmentDate().format(formatter), investment.getInvestmentAmount()));
+                                series.getData().add(new XYChart.Data<>(investment
+                                        .getInvestmentDate().format(formatter), investment.getInvestmentAmount()));
                             }
                             return series;
                         }
@@ -261,8 +265,10 @@ public class InvestmentAnalysisPane {
                             for (Investment investment : retrievedInvestments) {
                                 LocalDate fromDate = fromDatePicker.getValue();
                                 LocalDate toDate = toDatePicker.getValue();
-                                if (investment.getInvestmentDate().isAfter(fromDate) && investment.getInvestmentDate().isBefore(toDate)){
-                                    series.getData().add(new XYChart.Data<>(investment.getInvestmentDate().format(formatter), investment.getInvestmentAmount()));
+                                if (investment.getInvestmentDate().isAfter(fromDate) && investment.getInvestmentDate()
+                                        .isBefore(toDate)){
+                                    series.getData().add(new XYChart.Data<>(investment
+                                            .getInvestmentDate().format(formatter), investment.getInvestmentAmount()));
                                 }
                             }
                             return series;
