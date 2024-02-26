@@ -2,11 +2,9 @@ package com.example.compsciia.views;
 
 import com.example.compsciia.compsciia;
 import com.example.compsciia.models.Client;
-import com.example.compsciia.models.User;
 import com.example.compsciia.util.ClientService;
 import com.example.compsciia.util.InvestmentService;
 import javafx.application.Platform;
-import javafx.beans.Observable;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.concurrent.Task;
